@@ -84,7 +84,7 @@ export default function PharmacyRejectedPage() {
       // Refresh user data to update status
       window.location.href = '/pending-approval';
     } catch (error: any) {
-      toast.error(error.response?.data?.message || 'Failed to resubmit application');
+      toast.error(error.response?.data?.message || t('extras.errors.failedToResubmit'));
     } finally {
       setLoading(false);
     }
@@ -132,10 +132,10 @@ export default function PharmacyRejectedPage() {
         <div className="text-center mb-8">
         <div className="text-6xl mb-4"></div>
         <h1 className="text-3xl md:text-4xl font-bold text-red-600 dark:text-red-500 mb-4">
-          Application Rejected
+          {t('extras.pharmacyRejected.title')}
           </h1>
         <p className="text-lg text-gray-700 dark:text-gray-300 mb-6">
-          Your pharmacy application was rejected. Please review the feedback and resubmit.
+          {t('extras.pharmacyRejected.subtitle')}
           </p>
       </div>
 
@@ -146,7 +146,7 @@ export default function PharmacyRejectedPage() {
             <div className="text-3xl"></div>
             <div className="flex-1">
               <h3 className="font-bold text-gray-900 dark:text-gray-100 mb-2">
-                Rejection Reason
+                {t('extras.pharmacyRejected.rejectionReasonLabel')}
                 </h3>
               <p className="text-gray-700 dark:text-gray-300">
                 {pharmacyData.rejectionReason}
@@ -161,7 +161,7 @@ export default function PharmacyRejectedPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              Pharmacy Name *
+              {t('extras.pharmacyRejected.pharmacyNameRequired')}
               </label>
             <input
                 type="text"
@@ -174,7 +174,7 @@ export default function PharmacyRejectedPage() {
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              Representative Name *
+              {t('extras.pharmacyRejected.representativeNameRequired')}
               </label>
             <input
                 type="text"
@@ -187,7 +187,7 @@ export default function PharmacyRejectedPage() {
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              Phone Number *
+              {t('extras.pharmacyRejected.phoneNumberRequired')}
               </label>
             <input
                 type="tel"
@@ -200,7 +200,7 @@ export default function PharmacyRejectedPage() {
 
           <div>
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              Date of Incorporation *
+              {t('extras.pharmacyRejected.dateOfIncorporationRequired')}
               </label>
             <input
                 type="date"
@@ -214,7 +214,7 @@ export default function PharmacyRejectedPage() {
 
         <div>
           <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-            Address *
+            {t('extras.pharmacyRejected.addressRequired')}
             </label>
           <textarea
               value={formData.address}
@@ -229,7 +229,7 @@ export default function PharmacyRejectedPage() {
           <div className="space-y-4">
           <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6">
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              RDB Certificate * (Upload new document if needed)
+              {t('extras.pharmacyRejected.rdbCertificateRequired')}
               </label>
             <input
                 type="file"
@@ -242,14 +242,14 @@ export default function PharmacyRejectedPage() {
               />
             {formData.rdbCertificate && (
                 <p className="text-sm text-green-600 dark:text-green-400 mt-2">
-                 Document uploaded
+                 {t('extras.pharmacyRejected.documentUploaded')}
                 </p>
             )}
             </div>
 
           <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-xl p-6">
             <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
-              Pharmacy License * (Upload new document if needed)
+              {t('extras.pharmacyRejected.pharmacyLicenseRequired')}
               </label>
             <input
                 type="file"
@@ -262,7 +262,7 @@ export default function PharmacyRejectedPage() {
               />
             {formData.pharmacyLicense && (
                 <p className="text-sm text-green-600 dark:text-green-400 mt-2">
-                 Document uploaded
+                 {t('extras.pharmacyRejected.documentUploaded')}
                 </p>
             )}
             </div>
@@ -281,7 +281,7 @@ export default function PharmacyRejectedPage() {
                 <span>{t('pharmacyRejected.resubmitting')}</span>
               </div>
             ) : (
-                'Resubmit Application'
+                t('extras.pharmacyRejected.resubmitApplication')
               )}
             </button>
             
@@ -290,7 +290,7 @@ export default function PharmacyRejectedPage() {
               onClick={handleLogout}
               className="px-8 py-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 border-2 border-gray-300 dark:border-gray-600 rounded-xl font-bold hover:bg-gray-50 dark:hover:bg-gray-600 transition-all"
             >
-            Logout
+            {t('common.logout')}
             </button>
         </div>
       </form>
@@ -298,7 +298,7 @@ export default function PharmacyRejectedPage() {
       {/* Contact Info */}
         <div className="mt-8 pt-6 border-t-2 border-gray-200 dark:border-gray-700 text-center">
         <p className="text-sm text-gray-600 dark:text-gray-400">
-          Need help? Contact our support team
+          {t('extras.pharmacyRejected.contactSupport')}
           </p>
         <p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
           Email: <span className="text-orange-600 dark:text-orange-400 font-medium">support@evuze.com</span>
@@ -308,7 +308,7 @@ export default function PharmacyRejectedPage() {
 
     {/* Footer */}
       <div className="absolute bottom-4 left-0 right-0 text-center text-white text-sm opacity-75">
-      © 2025 E-Vuze Healthcare Platform. All rights reserved.
+      {t('landing.copyright2025')}
       </div>
   </div>
 );

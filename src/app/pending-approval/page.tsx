@@ -125,7 +125,7 @@ export default function PendingApprovalPage() {
 
     {/* Footer */}
       <div className="absolute bottom-4 left-0 right-0 text-center text-white text-sm opacity-75">
-      © 2025 E-Vuze Healthcare Platform. All rights reserved.
+      {t('landing.copyright2025')}
       </div>
   </div>
 );

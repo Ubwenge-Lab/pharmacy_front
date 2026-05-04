@@ -287,7 +287,7 @@ export default function SuperAdminDashboard() {
                       className="px-3 py-1.5 text-xs font-medium rounded-lg border transition-all hover:bg-gray-50"
                       style={{ color: NAVY, borderColor: '#BDD9FF' }}
                     >
-                      View License
+                      {t('superAdminPages.viewLicense')}
                     </button>
                   )}
                   <button
@@ -421,7 +421,7 @@ export default function SuperAdminDashboard() {
                     </div>
                   </div>
                   <span className="px-2.5 py-1 bg-yellow-100 text-yellow-700 rounded-full text-xs font-semibold">
-                    Pending
+                    {t('superAdminPages.pending')}
                   </span>
                 </div>
               ))}
@@ -575,14 +575,14 @@ export default function SuperAdminDashboard() {
                 onClick={() => { setRejectModal(null); setRejectReason(''); }}
                 className="flex-1 py-2.5 border border-gray-200 text-gray-700 rounded-xl text-sm font-semibold hover:bg-gray-50"
               >
-                Cancel
+                {t('common.cancel')}
               </button>
               <button
                 onClick={handleRejectBranch}
                 disabled={!rejectReason.trim() || !!branchAction}
                 className="flex-1 py-2.5 bg-red-600 hover:bg-red-700 text-white rounded-xl text-sm font-semibold disabled:opacity-50"
               >
-                Confirm Rejection
+                {t('superAdminPages.confirmRejection')}
               </button>
             </div>
           </div>

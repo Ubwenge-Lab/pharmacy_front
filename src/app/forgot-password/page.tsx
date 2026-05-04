@@ -43,27 +43,27 @@ export default function ForgotPasswordPage() {
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-3">{t('forgotPassword.title')}</h2>
           <p className="text-blue-100 text-sm leading-relaxed">
-            We'll send a secure reset code to your registered email address.
+            {t('extras.auth.forgotSubtitle')}
             </p>
         </div>
         <div className="space-y-4">
           {[
-              { icon: MapPinIcon, title: 'Find Nearby Pharmacies', desc: 'Locate pharmacies with real-time availability.' },
-              { icon: ClockIcon, title: 'Save Time', desc: 'Check availability before visiting.' },
-              { icon: UserGroupIcon, title: 'Connect with Healthcare', desc: 'Bridge patients and pharmacies.' },
-              { icon: ShieldCheckIcon, title: 'Secure & Private', desc: 'Enterprise-grade security.' },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="flex items-start gap-3">
+              { icon: MapPinIcon, titleKey: 'extras.auth.featureFindPharmacies', descKey: 'extras.auth.featureFindPharmaciesShort' },
+              { icon: ClockIcon,  titleKey: 'extras.auth.featureSaveTime',       descKey: 'extras.auth.featureSaveTimeShort' },
+              { icon: UserGroupIcon, titleKey: 'extras.auth.featureConnect',     descKey: 'extras.auth.featureConnectShort' },
+              { icon: ShieldCheckIcon, titleKey: 'extras.auth.featureSecure',    descKey: 'extras.auth.featureSecureShort' },
+            ].map(({ icon: Icon, titleKey, descKey }) => (
+              <div key={titleKey} className="flex items-start gap-3">
               <Icon className="w-5 h-5 shrink-0 mt-0.5 text-teal-300" />
               <div>
-                <h3 className="font-semibold text-sm mb-0.5">{title}</h3>
-                <p className="text-blue-200 text-xs">{desc}</p>
+                <h3 className="font-semibold text-sm mb-0.5">{t(titleKey)}</h3>
+                <p className="text-blue-200 text-xs">{t(descKey)}</p>
               </div>
             </div>
           ))}
           </div>
       </div>
-      <p className="text-blue-300 text-xs">© 2026 Evuze Healthcare Platform. All rights reserved.</p>
+      <p className="text-blue-300 text-xs">{t('landing.copyrightFull')}</p>
     </div>
 
     {/* RIGHT PANEL */}
@@ -90,7 +90,7 @@ export default function ForgotPasswordPage() {
           <button type="submit" disabled={loading}
               className="w-full bg-teal-500 hover:bg-teal-600 text-white py-3 rounded-lg font-semibold text-sm transition-all shadow-md disabled:opacity-50 flex items-center justify-center gap-2">
             {loading
-                ? <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Sending...</>
+                ? <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> {t('extras.auth.sending')}</>
               : t('forgotPassword.sendCode')}
             </button>
         </form>
@@ -103,7 +103,7 @@ export default function ForgotPasswordPage() {
 
         <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
           <p className="text-xs text-blue-700">
-             Check your spam folder if you don't see the email within a few minutes.
+             {t('extras.auth.checkSpamFolder')}
             </p>
         </div>
       </div>

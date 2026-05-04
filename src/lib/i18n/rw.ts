@@ -344,6 +344,10 @@ export const rw = {
     totalEmployees: 'Abakozi Bose',
     monthlyRevenue: 'Amafaranga Buri Kwezi',
     totalRevenue: 'Amafaranga Yose',
+    daily: 'Buri Munsi', // [REVIEW RW]
+    weekly: 'Buri Cyumweru', // [REVIEW RW]
+    dayByDay: 'umunsi ku wundi', // [REVIEW RW]
+    groupedByWeek: 'itsindwa ku cyumweru', // [REVIEW RW]
     monthlyBranchRevenue: 'Iterambere ry\'Amafaranga y\'Amashami Buri Kwezi',
     revenueByBranch: 'Amafaranga ku Gishami',
     inventoryDistribution: 'Gutangirwa kwa Ububiko mu Mashami',
@@ -956,6 +960,8 @@ export const rw = {
     managerAccount: 'Konti ya Umuyobozi',
     approved: 'Byemejwe',
     pending: 'Bitegereje',
+    viewLicense: 'Reba Uruhushya', // [REVIEW RW]
+    confirmRejection: 'Emeza Kugirira Neza Gukuraho', // [REVIEW RW]
     tryAdjustSearch: 'Gerageza guhindura amagambo yo gushakisha',
     noApplicationsInCategory: 'Nta bisabwa bibonetse muri iyi kategori',
     colRepresentative: 'Uhagarariye',
@@ -1458,6 +1464,8 @@ export const rw = {
     },
     analytics: {
       avgOrderValue: 'Igiciro Cyo Hagati cy\'Itumiza',
+      monthlyOrders: 'Amatumiza y\'Ukwezi', // [REVIEW RW]
+      itemsSold: 'Ibintu Byagurishijwe', // [REVIEW RW]
       attendanceTodayHeader: 'Kuza ku Kazi — Uyu munsi',
       activeShifts: 'Amashifu Akora',
       noCompleted14d: 'Nta tumiza ryarangiye mu minsi 14 ishize',
@@ -1479,6 +1487,7 @@ export const rw = {
       provideRejectionReason: 'Nyamuneka tanga impamvu yo kwanga',
       pinHomeRequired: 'Nyamuneka shyira aho utuye ku ikarita mbere yo kohereza.',
       pinPharmacyRequired: 'Nyamuneka shyira aho farumasi yawe iri ku ikarita mbere yo kohereza.',
+      failedToResubmit: 'Kohereza ubusabe bishobotse', // [REVIEW RW]
     },
     success: {
       branchApproved: 'Ishami ryemejwe neza',

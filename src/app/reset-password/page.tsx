@@ -80,27 +80,27 @@ function ResetPasswordForm() {
         <div className="mb-8">
           <h2 className="text-2xl font-bold mb-3">{t('resetPassword.title')}</h2>
           <p className="text-blue-100 text-sm leading-relaxed">
-            Enter the 6-digit code from your email and create a new secure password.
+            {t('extras.auth.resetSubtitle')}
             </p>
         </div>
         <div className="space-y-4">
           {[
-              { icon: MapPinIcon, title: 'Find Nearby Pharmacies', desc: 'Locate pharmacies with real-time availability.' },
-              { icon: ClockIcon, title: 'Save Time', desc: 'Check availability before visiting.' },
-              { icon: UserGroupIcon, title: 'Connect with Healthcare', desc: 'Bridge patients and pharmacies.' },
-              { icon: ShieldCheckIcon, title: 'Secure & Private', desc: 'Enterprise-grade security.' },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="flex items-start gap-3">
+              { icon: MapPinIcon,    titleKey: 'extras.auth.featureFindPharmacies', descKey: 'extras.auth.featureFindPharmaciesShort' },
+              { icon: ClockIcon,    titleKey: 'extras.auth.featureSaveTime',        descKey: 'extras.auth.featureSaveTimeShort' },
+              { icon: UserGroupIcon, titleKey: 'extras.auth.featureConnect',        descKey: 'extras.auth.featureConnectShort' },
+              { icon: ShieldCheckIcon, titleKey: 'extras.auth.featureSecure',       descKey: 'extras.auth.featureSecureShort' },
+            ].map(({ icon: Icon, titleKey, descKey }) => (
+              <div key={titleKey} className="flex items-start gap-3">
               <Icon className="w-5 h-5 shrink-0 mt-0.5 text-teal-300" />
               <div>
-                <h3 className="font-semibold text-sm mb-0.5">{title}</h3>
-                <p className="text-blue-200 text-xs">{desc}</p>
+                <h3 className="font-semibold text-sm mb-0.5">{t(titleKey)}</h3>
+                <p className="text-blue-200 text-xs">{t(descKey)}</p>
               </div>
             </div>
           ))}
           </div>
       </div>
-      <p className="text-blue-300 text-xs">© 2026 Evuze Healthcare Platform. All rights reserved.</p>
+      <p className="text-blue-300 text-xs">{t('landing.copyrightFull')}</p>
     </div>
 
     {/* RIGHT PANEL — scrollable */}
@@ -111,7 +111,7 @@ function ResetPasswordForm() {
         </div>
         <h2 className="text-2xl font-bold text-gray-900">{t('resetPassword.title')}</h2>
         <p className="text-gray-500 text-sm mt-1">{t('resetPassword.subtitle')}</p>
-        {email && <p className="text-xs text-teal-600 font-medium mt-1">Code sent to: {email}</p>}
+        {email && <p className="text-xs text-teal-600 font-medium mt-1">{t('extras.common.codeSentTo')} {email}</p>}
         </div>
 
       <div className="flex-1 overflow-y-auto px-8 pb-8">
@@ -179,7 +179,7 @@ function ResetPasswordForm() {
               disabled={loading || code.join('').length !== 6 || !Object.values(checks).every(Boolean) || newPassword !== confirmPassword}
               className="w-full bg-teal-500 hover:bg-teal-600 text-white py-3 rounded-lg font-semibold text-sm transition-all shadow-md disabled:opacity-50 flex items-center justify-center gap-2">
             {loading
-                ? <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> Resetting...</>
+                ? <><div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" /> {t('extras.auth.resetting')}</>
               : t('resetPassword.resetButton')}
             </button>
 

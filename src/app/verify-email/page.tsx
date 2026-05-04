@@ -87,27 +87,27 @@ function VerifyEmailForm() {
           <div className="mb-8">
             <h2 className="text-2xl font-bold mb-3">{t('verify.title')}</h2>
             <p className="text-sm leading-relaxed" style={{ color: 'rgba(219,234,254,0.85)' }}>
-              Almost there! Verify your email to activate your account and start using Evuze.
+              {t('extras.auth.almostThereVerify')}
             </p>
           </div>
           <div className="space-y-4">
             {[
-              { icon: MapPinIcon, title: 'Find Nearby Pharmacies', desc: 'Locate pharmacies with real-time availability.' },
-              { icon: ClockIcon, title: 'Save Time', desc: 'Check availability before visiting.' },
-              { icon: UserGroupIcon, title: 'Connect with Healthcare', desc: 'Bridge patients and pharmacies.' },
-              { icon: ShieldCheckIcon, title: 'Secure & Private', desc: 'Enterprise-grade security.' },
-            ].map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="flex items-start gap-3">
+              { icon: MapPinIcon,     titleKey: 'extras.auth.featureFindPharmacies', descKey: 'extras.auth.featureFindPharmaciesShort' },
+              { icon: ClockIcon,     titleKey: 'extras.auth.featureSaveTime',        descKey: 'extras.auth.featureSaveTimeShort' },
+              { icon: UserGroupIcon, titleKey: 'extras.auth.featureConnect',         descKey: 'extras.auth.featureConnectShort' },
+              { icon: ShieldCheckIcon, titleKey: 'extras.auth.featureSecure',        descKey: 'extras.auth.featureSecureShort' },
+            ].map(({ icon: Icon, titleKey, descKey }) => (
+              <div key={titleKey} className="flex items-start gap-3">
                 <Icon className="w-5 h-5 shrink-0 mt-0.5" style={{ color: TEAL }} />
                 <div>
-                  <h3 className="font-semibold text-sm mb-0.5">{title}</h3>
-                  <p className="text-xs" style={{ color: 'rgba(191,219,254,0.8)' }}>{desc}</p>
+                  <h3 className="font-semibold text-sm mb-0.5">{t(titleKey)}</h3>
+                  <p className="text-xs" style={{ color: 'rgba(191,219,254,0.8)' }}>{t(descKey)}</p>
                 </div>
               </div>
             ))}
           </div>
         </div>
-        <p className="text-xs" style={{ color: 'rgba(147,197,253,0.7)' }}>© 2026 Evuze Healthcare Platform. All rights reserved.</p>
+        <p className="text-xs" style={{ color: 'rgba(147,197,253,0.7)' }}>{t('landing.copyrightFull')}</p>
       </div>
 
       {/* RIGHT PANEL */}
@@ -123,7 +123,7 @@ function VerifyEmailForm() {
           <p className="text-gray-500 text-sm mb-1">{t('verify.subtitle')}</p>
           {email && (
             <p className="text-xs font-medium mb-6" style={{ color: TEAL }}>
-              Sent to: {email}
+              {t('extras.common.sentTo')} {email}
             </p>
           )}
 
@@ -166,7 +166,7 @@ function VerifyEmailForm() {
               {loading ? (
                 <>
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Verifying...
+                  {t('extras.auth.verifyingButton')}
                 </>
               ) : t('verify.verifyButton')}
             </button>
@@ -186,7 +186,7 @@ function VerifyEmailForm() {
 
           <div className="mt-6 text-center">
             <Link href="/login" className="text-sm text-gray-400 hover:text-gray-600">
-              ← Back to Login
+              {t('extras.auth.backToLoginArrow')}
             </Link>
           </div>
         </div>

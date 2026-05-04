@@ -62,7 +62,7 @@ export default function SignupPage() {
       toast.error(t('signup.passwordTooShort')); return;
     }
     if (patientForm.latitude === undefined || patientForm.longitude === undefined) {
-      toast.error('Please pin your home location on the map before submitting.');
+      toast.error(t('extras.errors.pinHomeRequired'));
       return;
     }
     setLoading(true);
@@ -92,7 +92,7 @@ export default function SignupPage() {
     }
     // Coordinates are required for pharmacies
     if (pharmacyForm.latitude === undefined || pharmacyForm.longitude === undefined) {
-      toast.error('Please pin your pharmacy location on the map before submitting.');
+      toast.error(t('extras.errors.pinPharmacyRequired'));
       return;
     }
     setLoading(true);
@@ -259,7 +259,7 @@ export default function SignupPage() {
                 longitude={patientForm.longitude}
                 onChange={(lat, lng) => setPatientForm(f => ({ ...f, latitude: lat, longitude: lng }))}
                 required={true}
-                label="Pin Your Home Location"
+                label={t('extras.signup.pinHomeLabel')}
                 height="260px"
               />
 
@@ -380,7 +380,7 @@ export default function SignupPage() {
                 longitude={pharmacyForm.longitude}
                 onChange={(lat, lng) => setPharmacyForm(f => ({ ...f, latitude: lat, longitude: lng }))}
                 required={true}
-                label="Pin Pharmacy Location on Map"
+                label={t('extras.signup.pinPharmacyLabel')}
                 height="300px"
               />
 

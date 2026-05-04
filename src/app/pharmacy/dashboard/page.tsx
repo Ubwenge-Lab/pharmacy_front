@@ -155,14 +155,14 @@ export default function PharmacyDashboard() {
     { icon: GitBranch,     label: t('pharmacyOwner.totalBranches'),  value: stats?.totalBranches  ?? 0, dark: false },
     { icon: Users,         label: t('pharmacyOwner.totalEmployees'), value: stats?.totalEmployees ?? 0, dark: false },
     { icon: DollarSign,    label: t('pharmacyOwner.monthlyRevenue'), value: `RWF ${fmt(stats?.monthlyRevenue ?? 0)}`, dark: false },
-    { icon: AlertTriangle, label: 'Total Revenue',                   value: `RWF ${fmt(stats?.totalRevenue   ?? 0)}`, dark: true  },
+    { icon: AlertTriangle, label: t('pharmacyOwner.totalRevenue'),  value: `RWF ${fmt(stats?.totalRevenue   ?? 0)}`, dark: true  },
   ];
 
   const analyticsCards = [
-    { icon: TrendingUp, label: 'Monthly Revenue',  value: `RWF ${fmt(analytics?.totalRevenue  ?? 0)}`, change: analytics?.revenueChange   },
-    { icon: BarChart2,  label: 'Monthly Orders',   value: analytics?.totalOrders  ?? 0,                change: analytics?.ordersChange    },
-    { icon: DollarSign, label: 'Avg Order Value',  value: `RWF ${fmt(analytics?.avgOrderValue ?? 0)}`, change: analytics?.avgValueChange  },
-    { icon: Package,    label: 'Items Sold',        value: analytics?.itemsSold    ?? 0,                change: analytics?.itemsChange     },
+    { icon: TrendingUp, label: t('pharmacyOwner.monthlyRevenue'),  value: `RWF ${fmt(analytics?.totalRevenue  ?? 0)}`, change: analytics?.revenueChange   },
+    { icon: BarChart2,  label: t('extras.analytics.monthlyOrders'), value: analytics?.totalOrders  ?? 0,               change: analytics?.ordersChange    },
+    { icon: DollarSign, label: t('extras.analytics.avgOrderValue'), value: `RWF ${fmt(analytics?.avgOrderValue ?? 0)}`, change: analytics?.avgValueChange  },
+    { icon: Package,    label: t('extras.analytics.itemsSold'),     value: analytics?.itemsSold    ?? 0,               change: analytics?.itemsChange     },
   ];
 
   const alerts:                 any[]  = stats?.alerts               ?? [];
@@ -295,7 +295,7 @@ export default function PharmacyDashboard() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
             <h3 className="font-semibold text-gray-800">{t('dashboard.revenuePerBranch')}</h3>
-            <p className="text-xs text-gray-400 mt-0.5">Past 30 days, {revenueView === 'daily' ? 'day by day' : 'grouped by week'}</p>
+            <p className="text-xs text-gray-400 mt-0.5">Past 30 days, {revenueView === 'daily' ? t('pharmacyOwner.dayByDay') : t('pharmacyOwner.groupedByWeek')}</p>
           </div>
           <div className="flex items-center gap-2">
             {/* Daily / Weekly toggle */}
@@ -304,13 +304,13 @@ export default function PharmacyDashboard() {
                 onClick={() => setRevenueView('daily')}
                 className={`px-3 py-1.5 rounded-md transition-all ${revenueView === 'daily' ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
               >
-                Daily
+                {t('pharmacyOwner.daily')}
               </button>
               <button
                 onClick={() => setRevenueView('weekly')}
                 className={`px-3 py-1.5 rounded-md transition-all ${revenueView === 'weekly' ? 'bg-white text-gray-800 shadow-sm' : 'text-gray-500 hover:text-gray-700'}`}
               >
-                Weekly
+                {t('pharmacyOwner.weekly')}
               </button>
             </div>
           </div>
@@ -399,7 +399,7 @@ export default function PharmacyDashboard() {
                 width={52}
               />
               <Tooltip content={<RevenueTooltip />} />
-              <Bar dataKey="revenue" name="Total Revenue" fill={TEAL} radius={[4, 4, 0, 0]} />
+              <Bar dataKey="revenue" name={t('pharmacyOwner.totalRevenue')} fill={TEAL} radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         ) : <EmptyState />}
@@ -416,7 +416,7 @@ export default function PharmacyDashboard() {
                 <XAxis dataKey="name" tick={{ fontSize: 11, fill: '#9CA3AF' }} axisLine={false} tickLine={false} />
                 <YAxis tick={{ fontSize: 11, fill: '#9CA3AF' }} axisLine={false} tickLine={false} tickFormatter={v => fmt(v)} width={52} />
                 <Tooltip content={<RevenueTooltip />} />
-                <Bar dataKey="revenue" name="Revenue" fill={NAVY} radius={[6, 6, 0, 0]} />
+                <Bar dataKey="revenue" name={t('extras.analytics.revenueChartLabel')} fill={NAVY} radius={[6, 6, 0, 0]} />
               </BarChart>
             </ResponsiveContainer>
           ) : <EmptyState />}

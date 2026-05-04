@@ -160,7 +160,7 @@ export default function BranchAnalyticsPage() {
               <XAxis dataKey="label" tick={{ fontSize: 11, fill: '#9CA3AF' }} axisLine={false} tickLine={false} interval={1} />
               <YAxis tick={{ fontSize: 11, fill: '#9CA3AF' }} axisLine={false} tickLine={false} tickFormatter={v => fmt(v)} width={52} />
               <Tooltip content={<RevenueTooltip />} />
-              <Line type="monotone" dataKey="revenue" name="Revenue" stroke={TEAL} strokeWidth={2.5} dot={false} activeDot={{ r: 4 }} />
+              <Line type="monotone" dataKey="revenue" name={t('extras.analytics.revenueChartLabel')} stroke={TEAL} strokeWidth={2.5} dot={false} activeDot={{ r: 4 }} />
             </LineChart>
           </ResponsiveContainer>
         ) : (
@@ -181,7 +181,7 @@ export default function BranchAnalyticsPage() {
               <XAxis dataKey="status" tick={{ fontSize: 11, fill: '#9CA3AF' }} axisLine={false} tickLine={false} />
               <YAxis tick={{ fontSize: 11, fill: '#9CA3AF' }} axisLine={false} tickLine={false} allowDecimals={false} width={36} />
               <Tooltip contentStyle={{ borderRadius: 8, border: 'none', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }} />
-              <Bar dataKey="count" name="Orders" fill={NAVY} radius={[6, 6, 0, 0]} />
+              <Bar dataKey="count" name={t('extras.analytics.ordersChartLabel')} fill={NAVY} radius={[6, 6, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
         ) : (

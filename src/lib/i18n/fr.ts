@@ -345,6 +345,10 @@ export const fr = {
     totalEmployees: 'Total des employés',
     monthlyRevenue: 'Revenu mensuel',
     totalRevenue: 'Revenu total',
+    daily: 'Quotidien', // [FR TODO]
+    weekly: 'Hebdomadaire', // [FR TODO]
+    dayByDay: 'jour par jour', // [FR TODO]
+    groupedByWeek: 'groupé par semaine', // [FR TODO]
     monthlyBranchRevenue: 'Croissance mensuelle du revenu des agences',
     revenueByBranch: 'Revenu par agence',
     inventoryDistribution: 'Distribution des stocks par agence',
@@ -956,6 +960,8 @@ export const fr = {
     managerAccount: 'Compte gestionnaire',
     approved: 'Approuvé',
     pending: 'En attente',
+    viewLicense: 'Voir la licence', // [FR TODO]
+    confirmRejection: 'Confirmer le rejet', // [FR TODO]
     tryAdjustSearch: 'Essayez d\'ajuster vos termes de recherche',
     noApplicationsInCategory: 'Aucune demande dans cette catégorie pour l\'instant',
     colRepresentative: 'Représentant',
@@ -1458,6 +1464,8 @@ export const fr = {
     },
     analytics: {
       avgOrderValue: 'Valeur moyenne de commande',
+      monthlyOrders: 'Commandes mensuelles', // [FR TODO]
+      itemsSold: 'Articles vendus', // [FR TODO]
       attendanceTodayHeader: 'Présence — Aujourd\'hui',
       activeShifts: 'Postes actifs',
       noCompleted14d: 'Aucune commande terminée au cours des 14 derniers jours',
@@ -1479,6 +1487,7 @@ export const fr = {
       provideRejectionReason: 'Veuillez fournir un motif de rejet',
       pinHomeRequired: 'Veuillez épingler votre emplacement personnel sur la carte avant de soumettre.',
       pinPharmacyRequired: 'Veuillez épingler l\'emplacement de votre pharmacie sur la carte avant de soumettre.',
+      failedToResubmit: 'Échec de la resoumission de la demande', // [FR TODO]
     },
     success: {
       branchApproved: 'Succursale approuvée avec succès',

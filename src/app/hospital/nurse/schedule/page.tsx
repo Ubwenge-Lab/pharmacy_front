@@ -142,7 +142,7 @@ export default function NurseSchedulePage() {
 
           return (
             <div key={item.id} className="flex items-center gap-3 sm:gap-5">
-              <span className="hidden w-24 shrink-0 text-right text-xs font-bold text-slate-600 sm:block">
+              <span className="hidden w-36 shrink-0 text-right text-xs font-bold text-slate-600 sm:block">
                 {item.time}
               </span>
               <span className="h-12 w-1 shrink-0 rounded" style={{ background: SKY }} />

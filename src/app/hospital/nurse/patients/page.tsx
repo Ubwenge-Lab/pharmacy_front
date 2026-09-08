@@ -2,11 +2,12 @@
 
 import { useMemo, useState } from 'react';
 import {
-  Search, Filter, MoreVertical, ChevronLeft, ChevronRight,
+  Search, Filter, ChevronLeft, ChevronRight,
   Users, BedDouble, Activity, UserCheck,
 } from 'lucide-react';
 import type { PatientStatus } from '@/types/hospital';
 import { useTranslation } from 'react-i18next';
+import { useRouter } from 'next/navigation';
 import { useHospitalId, useHospitalAdmissions } from '@/lib/hospital';
 
 const PAGE_SIZE = 3;
@@ -20,7 +21,8 @@ const STATUS_BADGE: Record<PatientStatus, string> = {
 export default function NursePatientsPage() {
   const { t } = useTranslation();
   const hospitalId = useHospitalId();
-  const { patients, loading, error, useMockFallback } = useHospitalAdmissions(hospitalId);
+  const router = useRouter();
+  const { patients, loading, error } = useHospitalAdmissions(hospitalId);
 
   const [search, setSearch] = useState('');
   const [statusFilter, setStatus] = useState<PatientStatus | 'ALL'>('ALL');
@@ -68,13 +70,7 @@ export default function NursePatientsPage() {
         <p className="mt-1 text-sm font-medium" style={{ color: '#0284C7' }}>{t('hospital.patientsSubtitle')}</p>
       </div>
 
-      {useMockFallback && (
-        <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
-          {t('hospital.devFallbackMessage', 'Showing mock patient data because the backend is unavailable or no hospital context is available in development.')}
-        </div>
-      )}
-
-      {error && !useMockFallback && (
+      {error && (
         <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
           {error}
         </div>
@@ -158,7 +154,11 @@ export default function NursePatientsPage() {
                   </td>
                 </tr>
               ) : pageItems.map(p => (
-                <tr key={p.id} className="hover:bg-gray-50 transition-colors">
+                <tr
+                  key={p.id}
+                  onClick={() => router.push(`/hospital/nurse/outpatient-triage?patientId=${p.id}`)}
+                  className="hover:bg-blue-50/40 transition-colors cursor-pointer"
+                >
                   <td className="px-6 py-4 text-sm font-medium text-gray-900">{p.name}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{p.patientId}</td>
                   <td className="px-6 py-4 text-sm text-gray-600">{p.age}</td>
@@ -169,7 +169,7 @@ export default function NursePatientsPage() {
                     <span className={`inline-flex px-2.5 py-1 text-xs font-semibold rounded-full ${STATUS_BADGE[p.status]}`}>{p.status === 'ACTIVE' ? t('hospital.active') : p.status === 'CRITICAL' ? t('hospital.critical') : p.status === 'INACTIVE' ? t('hospital.inactive') : p.status}</span>
                   </td>
                   <td className="px-6 py-4">
-                    <button className="text-gray-400 hover:text-gray-600 transition-colors"><MoreVertical className="w-5 h-5" /></button>
+                    <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-3 py-1 rounded-full">Start Triage</span>
                   </td>
                 </tr>
               ))

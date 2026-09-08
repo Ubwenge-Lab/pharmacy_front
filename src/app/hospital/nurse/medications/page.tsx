@@ -14,16 +14,7 @@ import {
     RotateCcw,
     Pill,
 } from 'lucide-react';
-// NOTE: the nurse-portal integration ticket originally asked to wire this page
-// to GET /hospitals/:hospitalId/drug-stock (inventory: brandName/quantity/
-// reorderLevel/expiryDate/lowStockAlert). That's a different concept from the
-// MAR (Medication Administration Record) shown here — which patient needs
-// which dose administered when — and this page was already live via
-// /inpatient/admissions + /mar before that ticket was written. Kept as-is;
-// drug-stock instead feeds the dashboard's medication-count stat card
-// (see src/app/hospital/nurse/dashboard/page.tsx).
-import { MOCK_MEDICATIONS, MOCK_MEDICATION_STATS } from '@/mock/hospital/medications';
-import { MedicationAdministration, MedicationStatus } from '@/types/hospital';
+import { MedicationStatus } from '@/types/hospital';
 import api from '@/lib/api';
 import { useHospitalId } from '@/lib/hospital';
 
@@ -112,7 +103,6 @@ export default function MedicationAdministrationPage() {
     const [selectedDate, setSelectedDate] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [useMockFallback, setUseMockFallback] = useState(false);
     const [medications, setMedications] = useState<MarRow[]>([]);
     const [stats, setStats] = useState<MedicationStatsSummary>(EMPTY_STATS);
     const [recordingId, setRecordingId] = useState<string | null>(null);
@@ -121,9 +111,8 @@ export default function MedicationAdministrationPage() {
         let cancelled = false;
 
         if (!hospitalId) {
-            setUseMockFallback(true);
-            setMedications(MOCK_MEDICATIONS.map(m => ({ ...m, admissionId: '', route: (m.route as string) || '—' })));
-            setStats(MOCK_MEDICATION_STATS);
+            setMedications([]);
+            setStats(EMPTY_STATS);
             setError(null);
             setLoading(false);
             return () => {
@@ -134,7 +123,6 @@ export default function MedicationAdministrationPage() {
         const loadMar = async () => {
             setLoading(true);
             setError(null);
-            setUseMockFallback(false);
 
             try {
                 const admissionsResponse = await api.get(`/inpatient/admissions?hospitalId=${hospitalId}`);
@@ -186,17 +174,11 @@ export default function MedicationAdministrationPage() {
                     setMedications(rows);
                     setStats(buildStats(rows));
                 }
-            } catch (err) {
+            } catch {
                 if (!cancelled) {
-                    if (process.env.NODE_ENV !== 'production') {
-                        setUseMockFallback(true);
-                        setMedications(MOCK_MEDICATIONS.map(m => ({ ...m, admissionId: '', route: (m.route as string) || '—' })));
-                        setStats(MOCK_MEDICATION_STATS);
-                    } else {
-                        setError('Unable to load medication records right now.');
-                        setMedications([]);
-                        setStats(EMPTY_STATS);
-                    }
+                    setError('Unable to load medication records right now.');
+                    setMedications([]);
+                    setStats(EMPTY_STATS);
                 }
             } finally {
                 if (!cancelled) setLoading(false);
@@ -285,12 +267,6 @@ export default function MedicationAdministrationPage() {
                 </div>
                 <div className="absolute top-0 right-0 w-64 h-64 bg-[#38BDF8] opacity-5 rounded-full -mr-20 -mt-20 blur-3xl" />
             </div>
-
-            {useMockFallback && (
-                <div className="rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm text-amber-700">
-                    {t('hospital.devFallbackMessage', 'Showing mock medication data because the backend is unavailable or no hospital context is available in development.')}
-                </div>
-            )}
 
             {error && (
                 <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
@@ -461,14 +437,14 @@ export default function MedicationAdministrationPage() {
                                                 <>
                                                     <button
                                                         onClick={() => handleRecord(med)}
-                                                        disabled={recordingId === med.id || useMockFallback}
+                                                        disabled={recordingId === med.id}
                                                         className="px-4 py-2 bg-[#38BDF8] text-white rounded-lg text-xs font-bold hover:bg-[#0EA5E9] transition-all shadow-sm disabled:opacity-50"
                                                     >
                                                         {recordingId === med.id ? '…' : t('hospital.record')}
                                                     </button>
                                                     <button
                                                         onClick={() => handleMarkMissed(med)}
-                                                        disabled={recordingId === med.id || useMockFallback}
+                                                        disabled={recordingId === med.id}
                                                         className="px-3 py-2 text-[#64748B] hover:text-[#DC2626] rounded-lg text-xs font-bold transition-all disabled:opacity-50"
                                                     >
                                                         {t('hospital.missed')}

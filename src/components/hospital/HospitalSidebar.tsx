@@ -21,6 +21,8 @@ import {
   LogOut,
   X,
   User,
+  Search,
+  UserPlus,
 } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 
@@ -62,13 +64,16 @@ const NURSE_NAV = [
 ];
 
 const RECEPTIONIST_NAV = [
-  { href: '/hospital/receptionist/dashboard',         icon: LayoutDashboard, labelKey: 'hospital.dashboard' },
-  { href: '/hospital/receptionist/appointment-list',  icon: CalendarDays,    labelKey: 'hospital.appointments' },
-  { href: '/hospital/receptionist/checkingQueue',     icon: Clock,           labelKey: 'hospital.checkingQueue' },
-  { href: '/hospital/receptionist/leave-request',     icon: Users,           labelKey: 'hospital.leaveRequest' },
-  { href: '/hospital/receptionist/notifications',     icon: Bell,            labelKey: 'common.notifications' },
-  { href: '/hospital/receptionist/profile',           icon: User,            labelKey: 'hospital.profile' },
-  { href: '/hospital/receptionist/change-password',   icon: UserCog,         labelKey: 'common.changePassword' },
+  { href: '/hospital/receptionist/dashboard',            icon: LayoutDashboard, labelKey: 'hospital.dashboard' },
+  { href: '/hospital/receptionist/appointment-list',     icon: CalendarDays,    labelKey: 'hospital.appointments' },
+  { href: '/hospital/receptionist/checkingQueue',        icon: Clock,           labelKey: 'hospital.checkingQueue' },
+  { href: '/hospital/receptionist/patient-list',          icon: ClipboardList,   labelKey: 'hospital.patientList' },
+  { href: '/hospital/receptionist/patient-registration', icon: Search,          labelKey: 'hospital.patientRegistration' },
+  { href: '/hospital/receptionist/walkin-registration',  icon: UserPlus,        labelKey: 'hospital.walkinRegistration' },
+  { href: '/hospital/receptionist/leave-request',        icon: Users,           labelKey: 'hospital.leaveRequest' },
+  { href: '/hospital/receptionist/notifications',        icon: Bell,            labelKey: 'common.notifications' },
+  { href: '/hospital/receptionist/profile',              icon: User,            labelKey: 'hospital.profile' },
+  { href: '/hospital/receptionist/change-password',      icon: UserCog,         labelKey: 'common.changePassword' },
 ];
 
 const PORTAL_LABEL_KEY: Record<'doctor' | 'admin' | 'nurse' | 'receptionist', string> = {

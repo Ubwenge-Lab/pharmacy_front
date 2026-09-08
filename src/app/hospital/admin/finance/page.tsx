@@ -29,11 +29,11 @@ export default function HospitalAdminFinancePage() {
   const { t, i18n } = useTranslation();
   const hospitalId = useHospitalId();
 
-  // 1 & 2. Stats and Weekly Revenue via hook
+  // Stats and Weekly Revenue via hook
   const { stats, weeklyRevenue, loading: statsLoading, error: statsError } = useHospitalDashboardStats(hospitalId);
   const dashError = statsError;
 
-  // 3. Invoices via independent useEffect
+  // Invoices via independent useEffect
   const [invoices, setInvoices] = useState<any[]>([]);
   const [invoicesLoading, setInvoicesLoading] = useState(true);
   const [invoicesError, setInvoicesError] = useState(false);
@@ -63,11 +63,7 @@ export default function HospitalAdminFinancePage() {
       })
       .catch((err) => {
         if (!active) return;
-        console.error('Failed to fetch invoices:', err);
-        // Verify invoices endpoint exists: if returns 404, endpoint is missing in Swagger/backend
         if (err.response?.status === 404) {
-          // TODO: Swagger/backend endpoint for GET /hospitals/:id/invoices is missing from routes.
-          // Fall back to empty state.
           setIsEndpointMissing(true);
           setInvoices([]);
         } else {

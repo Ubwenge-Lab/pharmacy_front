@@ -4,7 +4,6 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useAuth } from '@/context/AuthContext';
 import { MOCK_DOCTOR, MOCK_ADMIN, MOCK_NURSE, MOCK_RECEPTIONIST } from '@/mock/hospital/user';
-import { MOCK_PATIENTS } from '@/mock/hospital/consultations';
 import api from '@/lib/api';
 import type { DashboardStats, WeeklyRevenue, PatientStatus } from '@/types/hospital';
 import { isHospitalNurse } from '@/lib/auth';
@@ -275,8 +274,7 @@ export function useHospitalAdmissions(hospitalId: string | undefined): HospitalA
     let cancelled = false;
 
     if (!hospitalId) {
-      setUseMockFallback(true);
-      setPatients(MOCK_PATIENTS as unknown as HospitalPatientRow[]);
+      setPatients([]);
       setLoading(false);
       setError(null);
       return () => { cancelled = true; };
@@ -319,17 +317,11 @@ export function useHospitalAdmissions(hospitalId: string | undefined): HospitalA
         }
       } catch (err) {
         if (!cancelled) {
-          if (process.env.NODE_ENV !== 'production') {
-            setUseMockFallback(true);
-            setPatients(MOCK_PATIENTS as unknown as HospitalPatientRow[]);
-            setError(null);
-          } else {
-            const message = axios.isAxiosError(err)
-              ? err.response?.data?.message || 'Unable to load patient data right now.'
-              : 'Unable to load patient data right now.';
-            setError(message);
-            setPatients([]);
-          }
+          const message = axios.isAxiosError(err)
+            ? err.response?.data?.message || 'Unable to load patient data right now.'
+            : 'Unable to load patient data right now.';
+          setError(message);
+          setPatients([]);
         }
       } finally {
         if (!cancelled) {

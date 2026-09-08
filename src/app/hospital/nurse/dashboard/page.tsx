@@ -1,5 +1,4 @@
 // src/app/hospital/nurse/dashboard/page.tsx
-
 'use client';
 
 import { useEffect, useState, useCallback } from 'react';
@@ -149,7 +148,6 @@ export default function NurseDashboardPage() {
         >
           <polyline points="0,70 55,70 80,15 108,125 135,30 162,105 188,70 320,70" stroke="#1E4D8C" strokeWidth="7" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
-
         <div className="relative z-10">
           <h1 className="text-4xl sm:text-5xl font-black mb-3" style={{ color: '#1a3470' }}>
             {getGreeting()}, {getNurseDisplayName()}.
@@ -290,7 +288,7 @@ export default function NurseDashboardPage() {
         </div>
       </div>
 
-      {/* Schedule */}
+      {/* Today's Schedule */}
       <div className="overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm">
         <div className="flex items-center justify-between border-b border-gray-100 px-5 py-4">
           <div className="flex items-center gap-2">

@@ -19,7 +19,10 @@ import { useTranslation } from 'react-i18next';
 import { useHospitalId } from '@/lib/hospital';
 import api from '@/lib/api';
 import type { HospitalSettings } from '@/types/hospital';
-import type { HospitalFee, HospitalAnnouncement, HospitalDepartment } from '@/mock/hospital/settings';
+
+interface HospitalFee { id: string; service: string; price: number; status: string; }
+interface HospitalAnnouncement { id: string; title: string; type: string; createdAt?: string; date?: string; time?: string; }
+interface HospitalDepartment { id: string; name: string; head: string; staffCount: number; }
 
 const NAVY     = '#1E3A5F';
 const GRADIENT = 'linear-gradient(90deg, #1E4D8C 0%, #2D9B8A 100%)';
@@ -34,27 +37,6 @@ const announcementBadge: Record<string, { bg: string; color: string }> = {
 
 const EMPTY_SETTINGS: HospitalSettings = { hospitalName: '', address: '', phone: '', email: '' };
 
-// ── TODO: no backend endpoint yet — see gap doc ─────────────────────────────
-// src/docs/HOSPITAL_FRONTEND_BACKEND_GAPS.md (Gap S-2)
-// No HospitalFee model/table anywhere in schema.prisma and no
-// /hospitals/:id/fees route. Proposed endpoint spec is in the gap doc. Demo
-// data only, deliberately given a distinct "DEMO_" name (not the old
-// mock-file export name) so it's obvious at a glance this is a local
-// placeholder, not a wired integration.
-const DEMO_FEES: HospitalFee[] = [
-  { id: 'fee-001', service: 'Consultation', price: 10000, status: 'Active' },
-  { id: 'fee-002', service: 'X-RAY',        price: 70000, status: 'Active' },
-  { id: 'fee-003', service: 'Emergency',    price: 5000,  status: 'Active' },
-];
-
-// ── TODO: no backend endpoint yet — see gap doc ─────────────────────────────
-// src/docs/HOSPITAL_FRONTEND_BACKEND_GAPS.md (Gap S-3)
-// No HospitalAnnouncement model/table anywhere in schema.prisma. Proposed
-// endpoint spec is in the gap doc. Demo data only.
-const DEMO_ANNOUNCEMENTS: HospitalAnnouncement[] = [
-  { id: 'ann-001', title: 'Staff Meeting',      date: 'May 3, 2025',  time: '10 am', type: 'Urgent'  },
-  { id: 'ann-002', title: 'New Policy Update',  date: 'May 1, 2025',  time: '12 pm', type: 'Formal'  },
-];
 
 export default function HospitalAdminSettingsPage() {
   const { t } = useTranslation();
@@ -322,11 +304,21 @@ function HospitalPageCard({
 /* ── Fee Structure ── */
 function FeeStructureCard({ full }: { full?: boolean }) {
   const { t } = useTranslation();
+  const hospitalId = useHospitalId();
+  const [fees, setFees] = useState<HospitalFee[]>([]);
+
+  useEffect(() => {
+    if (!hospitalId) return;
+    api.get<any[]>(`/hospitals/${hospitalId}/fees`)
+      .then((res) => setFees(Array.isArray(res.data) ? res.data : []))
+      .catch(() => setFees([]));
+  }, [hospitalId]);
+
   return (
     <CardShell
       title={t('hospital.feeStructure')}
       subtitle={t('hospital.manageServiceFees')}
-      action={<ActionBtn label={t('hospital.addService')} disabled />}
+      action={<ActionBtn label={t('hospital.addService')} />}
     >
       <div className="overflow-x-auto">
         <table className="w-full text-sm min-w-[260px]">
@@ -339,28 +331,25 @@ function FeeStructureCard({ full }: { full?: boolean }) {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
-            {DEMO_FEES.map((fee) => (
+            {fees.length === 0 ? (
+              <tr><td colSpan={4} className="py-6 text-center text-xs text-gray-400">No fees configured yet.</td></tr>
+            ) : fees.map((fee) => (
               <tr key={fee.id}>
                 <td className="py-2.5 font-medium text-gray-700">{fee.service}</td>
-                <td className="py-2.5 text-gray-600">{fee.price.toLocaleString()}</td>
+                <td className="py-2.5 text-gray-600">{Number(fee.price).toLocaleString()}</td>
                 <td className="py-2.5">
                   <span className="px-2 py-0.5 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700">
                     {fee.status === 'Active' ? t('hospital.feeStatusActive') : fee.status}
                   </span>
                 </td>
                 <td className="py-2.5 text-right">
-                  <button className="text-gray-400 hover:text-gray-600">
-                    <MoreVertical size={14} />
-                  </button>
+                  <button className="text-gray-400 hover:text-gray-600"><MoreVertical size={14} /></button>
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
       </div>
-      <button disabled className="mt-3 w-full text-xs font-semibold py-2 rounded-lg border border-dashed border-gray-200 text-gray-400 flex items-center justify-center gap-1 cursor-not-allowed">
-        <Plus size={12} /> {t('hospital.addService')}
-      </button>
     </CardShell>
   );
 }
@@ -368,29 +357,38 @@ function FeeStructureCard({ full }: { full?: boolean }) {
 /* ── Announcements ── */
 function AnnouncementsCard({ full }: { full?: boolean }) {
   const { t } = useTranslation();
+  const hospitalId = useHospitalId();
+  const [announcements, setAnnouncements] = useState<HospitalAnnouncement[]>([]);
+
+  useEffect(() => {
+    if (!hospitalId) return;
+    api.get<any[]>(`/hospitals/${hospitalId}/announcements`)
+      .then((res) => setAnnouncements(Array.isArray(res.data) ? res.data : []))
+      .catch(() => setAnnouncements([]));
+  }, [hospitalId]);
+
   return (
     <CardShell
       title={t('hospital.announcements')}
       subtitle={t('hospital.manageAnnouncements')}
-      action={<ActionBtn label={t('hospital.addAnnouncement')} disabled />}
+      action={<ActionBtn label={t('hospital.addAnnouncement')} />}
     >
       <div className="space-y-3">
-        {DEMO_ANNOUNCEMENTS.map((ann) => {
+        {announcements.length === 0 ? (
+          <p className="py-4 text-center text-xs text-gray-400">No announcements yet.</p>
+        ) : announcements.map((ann) => {
           const badge = announcementBadge[ann.type] ?? announcementBadge.General;
+          const dateStr = ann.date ?? (ann.createdAt ? new Date(ann.createdAt).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }) : '');
           return (
-            <div
-              key={ann.id}
-              className="flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:bg-gray-50 transition-all cursor-pointer gap-2"
-            >
+            <div key={ann.id}
+              className="flex items-center justify-between p-3 rounded-xl border border-gray-100 hover:bg-gray-50 transition-all cursor-pointer gap-2">
               <div className="flex flex-col gap-1 min-w-0">
-                <span
-                  className="text-xs font-bold px-2 py-0.5 rounded-full w-fit"
-                  style={{ background: badge.bg, color: badge.color }}
-                >
+                <span className="text-xs font-bold px-2 py-0.5 rounded-full w-fit"
+                  style={{ background: badge.bg, color: badge.color }}>
                   {ann.type === 'Urgent' ? t('hospital.urgentType') : ann.type === 'Formal' ? t('hospital.formalType') : ann.type === 'General' ? t('hospital.generalType') : ann.type}
                 </span>
                 <p className="text-sm font-semibold text-gray-700 truncate">{ann.title}</p>
-                <p className="text-xs text-gray-400">{ann.date} · {ann.time}</p>
+                {dateStr && <p className="text-xs text-gray-400">{dateStr}</p>}
               </div>
               <ChevronRight size={16} className="text-gray-300 shrink-0" />
             </div>

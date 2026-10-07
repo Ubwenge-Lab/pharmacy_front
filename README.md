@@ -155,7 +155,7 @@ Access tokens live about **30 minutes**. With email + password nothing needs doi
 The command exits non-zero, with a clear message, in each of these cases. It never writes a silently empty report.
 
 - `1`: missing credentials, route file errors, environment unreachable, Chrome missing, or login rejected. Nothing is measured.
-- `2`: the reports were written, but at least one run failed. A protected route that ends anywhere other than its own path (for example, redirected to `/`) is marked **FAILED** with no score and sorted to the top of the dashboard. The same happens when a protected page stays on its URL while any of its requests return 401 or 403, which would otherwise render an empty state and score better than the real page.
+- `2`: the reports were written, but at least one run failed. A protected route that ends anywhere other than its own path (for example, redirected to `/`) is marked **FAILED** with no score and sorted to the top of the dashboard. The same happens when a protected page stays on its URL while any of its data requests fail (401/403, 404, 5xx), which would otherwise render an empty state and score better than the real page.
 
 ### Where reports land
 

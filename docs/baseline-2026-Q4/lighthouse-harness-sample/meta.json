@@ -1,22 +1,20 @@
 {
-  "generatedAt": "2026-10-07T16:46:40.963Z",
-  "startedAt": "2026-10-07T16:42:06.263Z",
-  "baseUrl": "https://evuze.ubwengelab.rw",
-  "routesFile": "lighthouse/routes.public.json",
+  "generatedAt": "2026-10-07T21:11:42.235Z",
+  "startedAt": "2026-10-07T19:48:14.957Z",
+  "baseUrl": "http://localhost:3000",
+  "routesFile": "lighthouse/routes.all-portals.json",
   "runsPerPage": 3,
   "devices": [
     "mobile",
     "desktop"
   ],
   "lighthouseVersion": "13.5.0",
-  "chromeVersion": "Chrome/154.0.8037.58",
+  "chromeVersion": "Chrome/154.0.0.0",
   "chromeFlags": [
-    "--headless=new",
-    "--no-first-run",
-    "--no-default-browser-check"
+    "--headless=new"
   ],
   "nodeVersion": "v24.15.0",
-  "gitCommit": "12cc3c0",
+  "gitCommit": "5732c49",
   "targets": {
     "score": {
       "good": 90,
@@ -51,5 +49,6 @@
       "good": 50,
       "poor": 100
     }
-  }
+  },
+  "rebuiltFromReports": true
 }

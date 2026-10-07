@@ -8,31 +8,40 @@
   ],
   "profiles": {
     "super_admin": {
-      "loginPath": "/super-admin/login"
+      "loginPath": "/super-admin/login",
+      "role": "SUPER_ADMIN"
     },
     "pharmacy": {
-      "loginPath": "/login"
+      "loginPath": "/login",
+      "role": "PHARMACY"
     },
     "branch_manager": {
-      "loginPath": "/login"
+      "loginPath": "/login",
+      "role": "BRANCH_MANAGER"
     },
     "pharmacist": {
-      "loginPath": "/login"
+      "loginPath": "/login",
+      "role": "PHARMACIST"
     },
     "cashier": {
-      "loginPath": "/login"
+      "loginPath": "/login",
+      "role": "CASHIER"
     },
     "hospital_admin": {
-      "loginPath": "/login"
+      "loginPath": "/login",
+      "role": "HOSPITAL_ADMIN"
     },
     "doctor": {
-      "loginPath": "/login"
+      "loginPath": "/login",
+      "role": "DOCTOR"
     },
     "nurse": {
-      "loginPath": "/login"
+      "loginPath": "/login",
+      "role": "NURSE"
     },
     "receptionist": {
-      "loginPath": "/login"
+      "loginPath": "/login",
+      "role": "RECEPTIONIST"
     }
   },
   "routes": [

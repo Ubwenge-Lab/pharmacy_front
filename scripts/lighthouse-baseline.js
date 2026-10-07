@@ -75,6 +75,7 @@ function parseArgs(argv) {
     else if (a === '--only') args.only = next().split(',').map((s) => s.trim());
     else if (a === '--base-url') args.baseUrl = next();
     else if (a === '--dashboard-only') args.dashboardOnly = next();
+    else if (a === '--rebuild') args.rebuild = next();
     else if (a === '--interactive-login') args.interactive = true;
     else if (a === '--help' || a === '-h') args.help = true;
     else die(`Unknown argument: ${a} (try --help)`);
@@ -94,6 +95,9 @@ Usage: npm run lighthouse:baseline -- [options]
   --out <dir>             Output root (default: lighthouse-reports/). A date-stamped folder is created inside.
   --interactive-login     For profiles without a password in the env, open a visible Chrome window
                           on the login page and wait for a person to sign in by hand.
+  --rebuild <dir>         Recreate runs.json + CSVs + dashboard of a run folder purely from its
+                          reports/*.report.json (recovers an interrupted run; also merges reports
+                          copied in from another run). Needs --routes for surface paths.
   --dashboard-only <dir>  Rebuild index.html / CSVs of an existing run folder from its JSON reports.
 
 Credentials, per auth profile <P> (upper-case), from the environment or a gitignored .env.lighthouse:
@@ -240,7 +244,7 @@ function resolveCredentials(cfg, interactive) {
       }
       creds[name] = { mode: 'token', token, refreshToken: process.env[e.refreshVar], claims };
     } else if (interactive) {
-      creds[name] = { mode: 'interactive', email, loginPath: cfg.profiles[name].loginPath || '/login' };
+      creds[name] = { mode: 'interactive', email, loginPath: cfg.profiles[name].loginPath || '/login', expectRole: cfg.profiles[name].role };
     } else {
       missing.push(`profile "${name}": set ${e.emailVar} + ${e.passwordVar} (or ${e.tokenVar})`);
     }
@@ -378,8 +382,10 @@ async function interactiveLogin(context, cfg, profileName, cred) {
     `--remote-debugging-port=${port}`, `--user-data-dir=${profileDir}`, '--no-first-run', '--no-default-browser-check',
     '--new-window', cfg.baseUrl + cred.loginPath,
   ], { stdio: 'ignore', detached: false });
+  // Don't watch child 'exit': on Windows the launcher process can exit while
+  // the window lives on. The DevTools connection is the source of truth.
   let closed = false;
-  child.on('exit', () => { closed = true; });
+  child.on('error', (e) => die(`Could not start Chrome for the login window: ${e.message}`));
 
   let visible;
   for (let i = 0; i < 40 && !visible; i++) {
@@ -399,21 +405,31 @@ async function interactiveLogin(context, cfg, profileName, cred) {
     const deadline = Date.now() + 10 * 60 * 1000;
     let token;
     let page;
+    let warnedRole = false;
     while (Date.now() < deadline && !closed) {
       const pages = await visible.pages().catch(() => []);
       page = pages.find((pg) => pg.url().startsWith(cfg.baseUrl)) || pages[0];
       if (page) {
         const cookies = await page.cookies(cfg.baseUrl).catch(() => []);
         token = cookies.find((c) => c.name === 'accessToken')?.value;
-        if (token && !new URL(page.url()).pathname.startsWith(cred.loginPath)) break;
+        if (token && !new URL(page.url()).pathname.startsWith(cred.loginPath)) {
+          const role = decodeJwt(token)?.role;
+          if (!cred.expectRole || role === cred.expectRole) break;
+          if (!warnedRole) {
+            console.log(`>>> That session is role ${role}, but profile "${profileName}" needs ${cred.expectRole}. Log out (or open ${cred.loginPath} again) and sign in as ${cred.email || cred.expectRole}.`);
+            warnedRole = true;
+          }
+        } else if (!token) warnedRole = false;
         token = undefined;
       }
       await new Promise((r) => setTimeout(r, 1000));
     }
     if (!token) {
-      die(closed
-        ? `The login window for "${profileName}" was closed before a login was detected. Run the command again.`
-        : `No login detected for profile "${profileName}" within 10 minutes.`);
+      const err = new Error(closed
+        ? `login window closed before a login was detected`
+        : `no login within 10 minutes`);
+      err.loginSkipped = true;
+      throw err;
     }
     await new Promise((r) => setTimeout(r, 2000)); // let the app finish setting its cookies
     const cookies = (await page.cookies(cfg.baseUrl)).map(({ name, value, domain, path: p, expires, httpOnly, secure, sameSite }) =>
@@ -427,7 +443,10 @@ async function interactiveLogin(context, cfg, profileName, cred) {
   } finally {
     await visible.close().catch(() => {});
     try { child.kill(); } catch {}
-    setTimeout(() => fs.rmSync(profileDir, { recursive: true, force: true }), 3000).unref();
+    // Best effort: Chrome can hold the profile open for a while on Windows.
+    setTimeout(() => {
+      try { fs.rmSync(profileDir, { recursive: true, force: true, maxRetries: 3, retryDelay: 1000 }); } catch {}
+    }, 3000).unref();
   }
 }
 
@@ -488,6 +507,47 @@ async function main() {
     console.log(HELP);
     return;
   }
+  if (args.rebuild) {
+    const dir = path.resolve(process.cwd(), args.rebuild);
+    const cfg = loadRoutes(args.routes || process.env.LH_ROUTES, args);
+    const bySlug = Object.fromEntries(cfg.routes.map((r) => [slug(r.surface), r]));
+    const rows = [];
+    let lhVersion = '';
+    let chromeVersion = '';
+    for (const f of fs.readdirSync(path.join(dir, 'reports')).filter((x) => x.endsWith('.report.json')).sort()) {
+      const m = f.match(/^(.+)__(mobile|desktop)__run(\d+)\.report\.json$/);
+      if (!m) continue;
+      const route = bySlug[m[1]];
+      if (!route) die(`${f}: surface "${m[1]}" is not in ${cfg.file}`);
+      const lhr = JSON.parse(fs.readFileSync(path.join(dir, 'reports', f), 'utf8'));
+      lhVersion = lhr.lighthouseVersion;
+      chromeVersion = (lhr.environment?.hostUserAgent.match(/Chrome\/[\d.]+/) || [''])[0];
+      const finalUrl = lhr.finalDisplayedUrl || '';
+      const landed = finalUrl ? new URL(finalUrl).pathname : '';
+      const rejected = route.auth === 'none' ? [] : (lhr.audits['network-requests']?.details?.items || []).filter((i) => i.statusCode >= 400 && i.resourceType !== 'Document' && i.resourceType !== 'Image');
+      const row = {
+        surface: route.surface, device: m[2], run: Number(m[3]), status: 'ok', error: '', url: lhr.requestedUrl, finalUrl, auth: route.auth,
+        ...extractMetrics(lhr), lighthouseVersion: lhVersion, chromeVersion, fetchTime: lhr.fetchTime,
+        reportHtml: `reports/${f.replace('.json', '.html')}`, reportJson: `reports/${f}`,
+      };
+      if (landed !== route.path) Object.assign(row, { status: 'FAILED', error: `landed on ${landed || '?'} instead of ${route.path}`, score: null });
+      else if (rejected.length) {
+        const urls = [...new Set(rejected.map((i) => `${i.statusCode} ${new URL(i.url).pathname}`))].slice(0, 3).join(', ');
+        Object.assign(row, { status: 'FAILED', error: `page data failed to load (${urls})`, score: null });
+      }
+      rows.push(row);
+    }
+    if (!rows.length) die(`No reports found in ${path.join(dir, 'reports')}`);
+    const meta = {
+      generatedAt: new Date().toISOString(), startedAt: rows.map((r) => r.fetchTime).sort()[0], baseUrl: cfg.baseUrl,
+      routesFile: path.relative(ROOT, cfg.file).replace(/\\/g, '/'), runsPerPage: cfg.runs, devices: cfg.devices,
+      lighthouseVersion: lhVersion, chromeVersion, chromeFlags: ['--headless=new'], nodeVersion: process.version,
+      gitCommit: gitSha(), targets: cfg.targets, rebuiltFromReports: true,
+    };
+    writeOutputs(dir, meta, rows);
+    log(`Rebuilt ${rows.length} runs from reports. Dashboard: ${path.join(dir, 'index.html')}`);
+    return;
+  }
   if (args.dashboardOnly) {
     const dir = path.resolve(process.cwd(), args.dashboardOnly);
     const meta = JSON.parse(fs.readFileSync(path.join(dir, 'meta.json'), 'utf8'));
@@ -540,6 +600,7 @@ async function main() {
   log(`Output: ${outDir}`);
 
   const sessions = {}; // profile -> { context, exp }
+  const skipped = {}; // profile -> reason (interactive login missed)
   const rows = [];
   const total = cfg.routes.length * cfg.devices.length * cfg.runs;
   let done = 0;
@@ -549,6 +610,7 @@ async function main() {
       // Fresh context per call: public pages are measured with no session at all.
       return browser.createBrowserContext();
     }
+    if (skipped[profileName]) throw new Error(`login skipped: ${skipped[profileName]}`);
     let s = sessions[profileName];
     const expiringSoon = s?.exp && s.exp - Date.now() < 5 * 60 * 1000;
     if (s && expiringSoon) {
@@ -561,7 +623,16 @@ async function main() {
     }
     if (!s) {
       const context = await browser.createBrowserContext();
-      const { exp } = await login(context, cfg, profileName, creds[profileName]);
+      let exp;
+      try {
+        ({ exp } = await login(context, cfg, profileName, creds[profileName]));
+      } catch (e) {
+        await context.close().catch(() => {});
+        if (!e.loginSkipped) throw e;
+        skipped[profileName] = e.message;
+        log(`  SKIPPING profile "${profileName}": ${e.message}. Its surfaces are marked FAILED; re-run them later with --only.`);
+        throw new Error(`login skipped: ${e.message}`);
+      }
       s = sessions[profileName] = { context, exp };
     }
     return s.context;
@@ -574,9 +645,15 @@ async function main() {
         // Fail fast: one plain navigation to prove the protected route really loads.
         let preflightError = null;
         if (route.auth !== 'none') {
-          const ctx = await getContext(route.auth);
-          const page = await ctx.newPage();
+          let ctx;
           try {
+            ctx = await getContext(route.auth);
+          } catch (e) {
+            if (!String(e.message).startsWith('login skipped')) throw e;
+            preflightError = e.message;
+          }
+          const page = ctx ? await ctx.newPage() : null;
+          if (page) try {
             await page.goto(url, { waitUntil: 'networkidle2', timeout: 90000 });
             await new Promise((r) => setTimeout(r, 1500)); // allow client-side auth redirects
             const landed = new URL(page.url()).pathname;
@@ -646,16 +723,16 @@ async function main() {
             });
             const landed = finalUrl ? new URL(finalUrl).pathname : '';
             // A protected page can stay on its URL but render an empty/error
-            // state when its API calls are rejected — that would score
+            // state when its API calls fail (401/403 session, 404 missing endpoint, 5xx) — that would score
             // *better* than the real page, so treat it as a failure too.
             const rejected = route.auth === 'none'
               ? []
-              : (lhr.audits['network-requests']?.details?.items || []).filter((i) => i.statusCode === 401 || i.statusCode === 403);
+              : (lhr.audits['network-requests']?.details?.items || []).filter((i) => i.statusCode >= 400 && i.resourceType !== 'Document' && i.resourceType !== 'Image');
             if (landed !== route.path) {
               Object.assign(row, { status: 'FAILED', error: `landed on ${landed || '?'} instead of ${route.path}`, score: null });
             } else if (rejected.length) {
               const urls = [...new Set(rejected.map((i) => `${i.statusCode} ${new URL(i.url).pathname}`))].slice(0, 3).join(', ');
-              Object.assign(row, { status: 'FAILED', error: `API rejected the session (${urls})`, score: null });
+              Object.assign(row, { status: 'FAILED', error: `page data failed to load (${urls})`, score: null });
             }
           } catch (e) {
             Object.assign(row, { status: 'FAILED', error: e.message.split('\n')[0] });

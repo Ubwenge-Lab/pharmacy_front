@@ -1,0 +1,15 @@
+{
+  "$comment": "Live-site smoke baseline: two logged-in roles plus login. Run with scripts/lighthouse-prod-check.ps1 (checks the backend is up first).",
+  "baseUrl": "https://evuze.ubwengelab.rw",
+  "runs": 3,
+  "devices": ["mobile", "desktop"],
+  "profiles": {
+    "pharmacy": { "loginPath": "/login", "role": "PHARMACY" },
+    "doctor": { "loginPath": "/login", "role": "DOCTOR" }
+  },
+  "routes": [
+    { "surface": "pharmacy-dashboard", "path": "/pharmacy/dashboard", "auth": "pharmacy" },
+    { "surface": "doctor-dashboard", "path": "/hospital/doctor/dashboard", "auth": "doctor" },
+    { "surface": "login", "path": "/login", "auth": "none" }
+  ]
+}

@@ -53,6 +53,8 @@ tr.failed { background: var(--row-fail); }
 .pill.warn { background: var(--warn-bg); color: var(--warn-fg); }
 .pill.bad { background: var(--bad-bg); color: var(--bad-fg); }
 .runs { font-size: 12px; }
+td.fixes { white-space: normal; min-width: 280px; max-width: 380px; font-size: 12px; }
+td.fixes ol { margin: 0; padding-left: 16px; }
 .legend { font-size: 12px; color: var(--muted); margin-top: 8px; }
 .legend span { display: inline-block; padding: 0 6px; border-radius: 4px; margin-right: 6px; }
 details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
@@ -81,6 +83,7 @@ details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
 <thead><tr>
   <th>Surface</th><th>Device</th><th>Spread</th>
   <th class="num">Score<small>≥ 90</small></th><th class="num">LCP<small>≤ 2.50 s</small></th><th class="num">INP<small>field only</small></th><th class="num">CLS<small>≤ 0.100</small></th><th class="num">TBT<small>≤ 200 ms</small></th><th class="num">Speed Index<small>≤ 3.40 s</small></th><th class="num">FCP<small>≤ 1.80 s</small></th><th class="num">JS<small>≤ 350 KB</small></th><th class="num">Requests<small>≤ 50</small></th>
+  <th>Top fixes<small>biggest estimated savings, median run</small></th>
   <th>Reports (run · json)</th>
 </tr></thead>
 <tbody>
@@ -97,6 +100,7 @@ details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
   <td class="num good" data-grade="good">1.25 s</td>
   <td class="num warn" data-grade="warn">435 KB</td>
   <td class="num good" data-grade="good">26</td>
+  <td class="fixes"><ol><li>Reduce unused JavaScript (Est savings of 158 KiB) — ~900 ms LCP</li><li>Minimize main-thread work (2.5 s) — ~700 ms TBT</li><li>Improve image delivery (Est savings of 93 KiB) — ~300 ms LCP</li></ol></td>
   <td class="runs"><a href="reports/signup__mobile__run1.report.html" title="Run 1: score 60">1</a> <a class="muted" href="reports/signup__mobile__run1.report.json">json</a> · <a href="reports/signup__mobile__run2.report.html" title="Run 2: score 66">2</a> <a class="muted" href="reports/signup__mobile__run2.report.json">json</a> · <a href="reports/signup__mobile__run3.report.html" title="Run 3: score 60">3</a> <a class="muted" href="reports/signup__mobile__run3.report.json">json</a></td>
 </tr>
 <tr class="">
@@ -112,6 +116,7 @@ details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
   <td class="num good" data-grade="good">1.17 s</td>
   <td class="num warn" data-grade="warn">403 KB</td>
   <td class="num good" data-grade="good">32</td>
+  <td class="fixes"><ol><li>Reduce unused JavaScript (Est savings of 128 KiB) — ~600 ms LCP</li><li>Minimize main-thread work (2.3 s) — ~550 ms TBT</li><li>Render-blocking requests (Est savings of 250 ms) — ~250 ms LCP</li></ol></td>
   <td class="runs"><a href="reports/landing__mobile__run1.report.html" title="Run 1: score 73">1</a> <a class="muted" href="reports/landing__mobile__run1.report.json">json</a> · <a href="reports/landing__mobile__run2.report.html" title="Run 2: score 73">2</a> <a class="muted" href="reports/landing__mobile__run2.report.json">json</a> · <a href="reports/landing__mobile__run3.report.html" title="Run 3: score 70">3</a> <a class="muted" href="reports/landing__mobile__run3.report.json">json</a></td>
 </tr>
 <tr class="">
@@ -127,6 +132,7 @@ details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
   <td class="num good" data-grade="good">1.49 s</td>
   <td class="num warn" data-grade="warn">402 KB</td>
   <td class="num good" data-grade="good">32</td>
+  <td class="fixes"><ol><li>Reduce unused JavaScript (Est savings of 128 KiB) — ~750 ms LCP</li><li>Render-blocking requests (Est savings of 280 ms) — ~300 ms LCP</li></ol></td>
   <td class="runs"><a href="reports/login__mobile__run1.report.html" title="Run 1: score 93">1</a> <a class="muted" href="reports/login__mobile__run1.report.json">json</a> · <a href="reports/login__mobile__run2.report.html" title="Run 2: score 82">2</a> <a class="muted" href="reports/login__mobile__run2.report.json">json</a> · <a href="reports/login__mobile__run3.report.html" title="Run 3: score 88">3</a> <a class="muted" href="reports/login__mobile__run3.report.json">json</a></td>
 </tr>
 <tr class="">
@@ -142,6 +148,7 @@ details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
   <td class="num good" data-grade="good">0.43 s</td>
   <td class="num warn" data-grade="warn">435 KB</td>
   <td class="num good" data-grade="good">28</td>
+  <td class="fixes"><ol><li>Reduce unused JavaScript (Est savings of 158 KiB) — ~160 ms load</li><li>Improve image delivery (Est savings of 124 KiB) — ~150 ms LCP</li><li>Use efficient cache lifetimes (Est savings of 74 KiB) — ~50 ms LCP</li></ol></td>
   <td class="runs"><a href="reports/signup__desktop__run1.report.html" title="Run 1: score 90">1</a> <a class="muted" href="reports/signup__desktop__run1.report.json">json</a> · <a href="reports/signup__desktop__run2.report.html" title="Run 2: score 95">2</a> <a class="muted" href="reports/signup__desktop__run2.report.json">json</a> · <a href="reports/signup__desktop__run3.report.html" title="Run 3: score 92">3</a> <a class="muted" href="reports/signup__desktop__run3.report.json">json</a></td>
 </tr>
 <tr class="">
@@ -157,6 +164,7 @@ details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
   <td class="num good" data-grade="good">0.36 s</td>
   <td class="num warn" data-grade="warn">403 KB</td>
   <td class="num good" data-grade="good">32</td>
+  <td class="fixes"><ol><li>Reduce unused JavaScript (Est savings of 128 KiB) — ~100 ms LCP</li><li>Legacy JavaScript (Est savings of 25 KiB) — ~50 ms LCP</li><li>Render-blocking requests (Est savings of 70 ms) — ~50 ms LCP</li></ol></td>
   <td class="runs"><a href="reports/landing__desktop__run1.report.html" title="Run 1: score 100">1</a> <a class="muted" href="reports/landing__desktop__run1.report.json">json</a> · <a href="reports/landing__desktop__run2.report.html" title="Run 2: score 100">2</a> <a class="muted" href="reports/landing__desktop__run2.report.json">json</a> · <a href="reports/landing__desktop__run3.report.html" title="Run 3: score 100">3</a> <a class="muted" href="reports/landing__desktop__run3.report.json">json</a></td>
 </tr>
 <tr class="">
@@ -172,6 +180,7 @@ details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
   <td class="num good" data-grade="good">0.46 s</td>
   <td class="num warn" data-grade="warn">402 KB</td>
   <td class="num good" data-grade="good">32</td>
+  <td class="fixes"><ol><li>Render-blocking requests (Est savings of 40 ms) — ~50 ms LCP</li><li>Reduce unused JavaScript (Est savings of 128 KiB) — ~50 ms FCP</li></ol></td>
   <td class="runs"><a href="reports/login__desktop__run1.report.html" title="Run 1: score 100">1</a> <a class="muted" href="reports/login__desktop__run1.report.json">json</a> · <a href="reports/login__desktop__run2.report.html" title="Run 2: score 100">2</a> <a class="muted" href="reports/login__desktop__run2.report.json">json</a> · <a href="reports/login__desktop__run3.report.html" title="Run 3: score 100">3</a> <a class="muted" href="reports/login__desktop__run3.report.json">json</a></td>
 </tr>
 </tbody>

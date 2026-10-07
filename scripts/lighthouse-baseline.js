@@ -360,6 +360,7 @@ function extractMetrics(lhr) {
   }
   const perf = lhr.categories?.performance?.score;
   return {
+    topFixes: extractTopFixes(lhr),
     score: typeof perf === 'number' ? Math.round(perf * 100) : null,
     lcp: num('largest-contentful-paint'),
     inp: null, // Navigation-mode Lighthouse cannot measure INP; TBT is the lab proxy.
@@ -372,6 +373,27 @@ function extractMetrics(lhr) {
   };
 }
 
+/**
+ * The three failing audits with the biggest estimated time savings, e.g.
+ * "Reduce unused JavaScript (Est savings of 158 KiB, ~900 ms LCP)". Turns the
+ * dashboard from a scoreboard into a to-do list.
+ */
+function extractTopFixes(lhr, limit = 3) {
+  const refs = lhr.categories?.performance?.auditRefs || [];
+  const metricIds = new Set(refs.filter((r) => r.group === 'metrics').map((r) => r.id));
+  const fixes = [];
+  for (const ref of refs) {
+    const a = lhr.audits?.[ref.id];
+    if (!a || metricIds.has(ref.id) || a.score === null || a.score >= 0.9) continue;
+    const s = a.metricSavings || {};
+    const ms = Math.max(s.LCP || 0, s.FCP || 0, s.TBT || 0, a.details?.overallSavingsMs || 0);
+    if (ms < 50) continue;
+    const metric = ['LCP', 'FCP', 'TBT'].find((m) => (s[m] || 0) === ms) || 'load';
+    fixes.push({ ms, label: `${a.title}${a.displayValue ? ` (${a.displayValue})` : ''} — ~${Math.round(ms / 10) * 10} ms ${metric}` });
+  }
+  return fixes.sort((x, y) => y.ms - x.ms).slice(0, limit).map((f) => f.label).join('; ');
+}
+
 async function main() {
   const args = parseArgs(process.argv.slice(2));
   if (args.help) {
@@ -382,6 +404,11 @@ async function main() {
     const dir = path.resolve(process.cwd(), args.dashboardOnly);
     const meta = JSON.parse(fs.readFileSync(path.join(dir, 'meta.json'), 'utf8'));
     const rows = JSON.parse(fs.readFileSync(path.join(dir, 'runs.json'), 'utf8'));
+    for (const r of rows) {
+      if (r.topFixes === undefined && r.reportJson) {
+        r.topFixes = extractTopFixes(JSON.parse(fs.readFileSync(path.join(dir, r.reportJson), 'utf8')));
+      }
+    }
     writeOutputs(dir, meta, rows);
     log(`Dashboard rebuilt: ${path.join(dir, 'index.html')}`);
     return;
@@ -588,9 +615,9 @@ async function main() {
 // ------------------------------------------------------------------ outputs
 
 const RUN_COLUMNS = ['surface', 'device', 'run', 'status', 'score', 'lcp', 'inp', 'cls', 'tbt', 'si', 'fcp', 'jsBytes', 'requests',
-  'url', 'finalUrl', 'auth', 'lighthouseVersion', 'chromeVersion', 'fetchTime', 'reportHtml', 'reportJson', 'error'];
+  'topFixes', 'url', 'finalUrl', 'auth', 'lighthouseVersion', 'chromeVersion', 'fetchTime', 'reportHtml', 'reportJson', 'error'];
 const SUMMARY_COLUMNS = ['surface', 'device', 'status', 'runsOk', 'runsTotal', 'score', 'lcp', 'inp', 'cls', 'tbt', 'si', 'fcp', 'jsBytes', 'requests',
-  'scoreMin', 'scoreMax', 'url', 'lighthouseVersion', 'representativeReport', 'error'];
+  'scoreMin', 'scoreMax', 'topFixes', 'url', 'lighthouseVersion', 'representativeReport', 'error'];
 const METRICS = ['score', 'lcp', 'cls', 'tbt', 'si', 'fcp', 'jsBytes', 'requests'];
 
 function summarise(rows) {
@@ -621,6 +648,7 @@ function summarise(rows) {
     s.scoreMax = scores.length ? Math.max(...scores) : null;
     const rep = ok.slice().sort((a, b) => Math.abs(a.score - s.score) - Math.abs(b.score - s.score))[0];
     s.representativeReport = rep?.reportHtml || '';
+    s.topFixes = rep?.topFixes || '';
     out.push(s);
   }
   // Worst first: failures, then partials, then ascending median score.
@@ -700,6 +728,7 @@ function renderDashboard(meta, summary, rows) {
   <td>${escapeHtml(s.device)}</td>
   <td>${status}</td>
   ${cols.map(([m]) => cell(m, s[m])).join('\n  ')}
+  <td class="fixes">${s.topFixes ? `<ol>${s.topFixes.split('; ').map((f) => `<li>${escapeHtml(f)}</li>`).join('')}</ol>` : '<span class="muted">—</span>'}</td>
   <td class="runs">${runLinks}</td>
 </tr>`;
   }).join('\n');
@@ -766,6 +795,8 @@ tr.failed { background: var(--row-fail); }
 .pill.warn { background: var(--warn-bg); color: var(--warn-fg); }
 .pill.bad { background: var(--bad-bg); color: var(--bad-fg); }
 .runs { font-size: 12px; }
+td.fixes { white-space: normal; min-width: 280px; max-width: 380px; font-size: 12px; }
+td.fixes ol { margin: 0; padding-left: 16px; }
 .legend { font-size: 12px; color: var(--muted); margin-top: 8px; }
 .legend span { display: inline-block; padding: 0 6px; border-radius: 4px; margin-right: 6px; }
 details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
@@ -794,6 +825,7 @@ details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
 <thead><tr>
   <th>Surface</th><th>Device</th><th>Spread</th>
   ${cols.map(([m, label]) => `<th class="num">${label}<small>${m === 'inp' ? 'field only' : escapeHtml(targetLabel(m, t[m]))}</small></th>`).join('')}
+  <th>Top fixes<small>biggest estimated savings, median run</small></th>
   <th>Reports (run · json)</th>
 </tr></thead>
 <tbody>

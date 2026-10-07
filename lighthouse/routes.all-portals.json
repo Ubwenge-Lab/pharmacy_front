@@ -1,0 +1,31 @@
+{
+  "$comment": "Every portal dashboard, logged in as the matching seeded test role (back-end src/prisma/seed.ts), plus the public entry pages.",
+  "baseUrl": "https://evuze.ubwengelab.rw",
+  "runs": 3,
+  "devices": ["mobile", "desktop"],
+  "profiles": {
+    "super_admin": { "loginPath": "/super-admin/login" },
+    "pharmacy": { "loginPath": "/login" },
+    "branch_manager": { "loginPath": "/login" },
+    "pharmacist": { "loginPath": "/login" },
+    "cashier": { "loginPath": "/login" },
+    "hospital_admin": { "loginPath": "/login" },
+    "doctor": { "loginPath": "/login" },
+    "nurse": { "loginPath": "/login" },
+    "receptionist": { "loginPath": "/login" }
+  },
+  "routes": [
+    { "surface": "landing", "path": "/", "auth": "none" },
+    { "surface": "login", "path": "/login", "auth": "none" },
+    { "surface": "signup", "path": "/signup", "auth": "none" },
+    { "surface": "super-admin-dashboard", "path": "/super-admin/dashboard", "auth": "super_admin" },
+    { "surface": "pharmacy-dashboard", "path": "/pharmacy/dashboard", "auth": "pharmacy" },
+    { "surface": "branch-dashboard", "path": "/branch/dashboard", "auth": "branch_manager" },
+    { "surface": "staff-dashboard-pharmacist", "path": "/staff/dashboard", "auth": "pharmacist" },
+    { "surface": "staff-dashboard-cashier", "path": "/staff/dashboard", "auth": "cashier" },
+    { "surface": "hospital-admin-dashboard", "path": "/hospital/admin/dashboard", "auth": "hospital_admin" },
+    { "surface": "doctor-dashboard", "path": "/hospital/doctor/dashboard", "auth": "doctor" },
+    { "surface": "nurse-dashboard", "path": "/hospital/nurse/dashboard", "auth": "nurse" },
+    { "surface": "receptionist-dashboard", "path": "/hospital/receptionist/dashboard", "auth": "receptionist" }
+  ]
+}

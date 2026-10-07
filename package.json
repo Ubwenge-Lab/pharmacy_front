@@ -9,7 +9,8 @@
     "start": "next start",
     "dev:doppler": "winpty doppler run -- npm run dev",
     "build:doppler": "winpty doppler run -- npm run build",
-    "lint": "eslint"
+    "lint": "eslint",
+    "lighthouse:baseline": "node scripts/lighthouse-baseline.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -57,6 +58,8 @@
     "eslint-config-next": "16.0.8",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
+    "lighthouse": "13.5.0",
+    "puppeteer": "25.12.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

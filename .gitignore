@@ -61,3 +61,6 @@ strategy.md
 /pr_output.log
 /diff.txt
 /tolocale_matches.txt
+# lighthouse baseline harness
+/lighthouse-reports/
+.env.lighthouse

@@ -1,0 +1,18 @@
+{
+  "$comment": "Copy this file, keep only your surfaces, and pass it with --routes. 'auth' is 'none' or a profile name; each profile reads LH_<PROFILE>_EMAIL / LH_<PROFILE>_PASSWORD (or LH_<PROFILE>_ACCESS_TOKEN).",
+  "baseUrl": "https://evuze.ubwengelab.rw",
+  "runs": 3,
+  "devices": ["mobile", "desktop"],
+  "profiles": {
+    "pharmacy": { "loginPath": "/login" },
+    "hospital_admin": { "loginPath": "/login" },
+    "super_admin": { "loginPath": "/super-admin/login" }
+  },
+  "routes": [
+    { "surface": "landing", "path": "/", "auth": "none" },
+    { "surface": "login", "path": "/login", "auth": "none" },
+    { "surface": "pharmacy-dashboard", "path": "/pharmacy/dashboard", "auth": "pharmacy" },
+    { "surface": "hospital-admin-dashboard", "path": "/hospital/admin/dashboard", "auth": "hospital_admin" },
+    { "surface": "super-admin-dashboard", "path": "/super-admin/dashboard", "auth": "super_admin" }
+  ]
+}

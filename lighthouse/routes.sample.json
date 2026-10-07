@@ -1,0 +1,12 @@
+{
+  "$comment": "Routes used for the committed sample in docs/baseline-2026-Q4/lighthouse-harness-sample/: public pages plus one authenticated dashboard.",
+  "baseUrl": "https://evuze.ubwengelab.rw",
+  "runs": 3,
+  "devices": ["mobile", "desktop"],
+  "profiles": { "pharmacy": { "loginPath": "/login" } },
+  "routes": [
+    { "surface": "landing", "path": "/", "auth": "none" },
+    { "surface": "login", "path": "/login", "auth": "none" },
+    { "surface": "pharmacy-dashboard", "path": "/pharmacy/dashboard", "auth": "pharmacy" }
+  ]
+}

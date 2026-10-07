@@ -1,0 +1,7 @@
+surface,device,status,runsOk,runsTotal,score,lcp,inp,cls,tbt,si,fcp,jsBytes,requests,scoreMin,scoreMax,url,lighthouseVersion,representativeReport,error
+signup,mobile,ok,3,3,60,5414,n/a (lab),0,676,3285,1250,445618,26,60,66,https://evuze.ubwengelab.rw/signup,13.5.0,reports/signup__mobile__run1.report.html,
+landing,mobile,ok,3,3,73,3790,n/a (lab),0,606,2202,1171,413141,32,70,73,https://evuze.ubwengelab.rw/,13.5.0,reports/landing__mobile__run1.report.html,
+login,mobile,ok,3,3,88,2917,n/a (lab),0,261,1850,1495,411412,32,82,93,https://evuze.ubwengelab.rw/login,13.5.0,reports/login__mobile__run3.report.html,
+signup,desktop,ok,3,3,92,1860,n/a (lab),0,11,821,431,445548,28,90,95,https://evuze.ubwengelab.rw/signup,13.5.0,reports/signup__desktop__run3.report.html,
+landing,desktop,ok,3,3,100,766,n/a (lab),0,0,690,358,413113,32,100,100,https://evuze.ubwengelab.rw/,13.5.0,reports/landing__desktop__run1.report.html,
+login,desktop,ok,3,3,100,596,n/a (lab),0,11,636,455,411337,32,100,100,https://evuze.ubwengelab.rw/login,13.5.0,reports/login__desktop__run1.report.html,

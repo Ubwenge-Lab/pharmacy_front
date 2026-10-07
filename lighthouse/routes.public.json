@@ -1,0 +1,11 @@
+{
+  "$comment": "Public pages only — needs no credentials. Useful to smoke-test the harness itself.",
+  "baseUrl": "https://evuze.ubwengelab.rw",
+  "runs": 3,
+  "devices": ["mobile", "desktop"],
+  "routes": [
+    { "surface": "landing", "path": "/", "auth": "none" },
+    { "surface": "login", "path": "/login", "auth": "none" },
+    { "surface": "signup", "path": "/signup", "auth": "none" }
+  ]
+}

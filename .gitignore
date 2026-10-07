@@ -64,3 +64,4 @@ strategy.md
 # lighthouse baseline harness
 /lighthouse-reports/
 .env.lighthouse
+!.env.lighthouse.example

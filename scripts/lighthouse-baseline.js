@@ -75,6 +75,7 @@ function parseArgs(argv) {
     else if (a === '--only') args.only = next().split(',').map((s) => s.trim());
     else if (a === '--base-url') args.baseUrl = next();
     else if (a === '--dashboard-only') args.dashboardOnly = next();
+    else if (a === '--interactive-login') args.interactive = true;
     else if (a === '--help' || a === '-h') args.help = true;
     else die(`Unknown argument: ${a} (try --help)`);
   }
@@ -91,6 +92,8 @@ Usage: npm run lighthouse:baseline -- [options]
   --only <surfaces>       Comma-separated surface names to run.
   --base-url <url>        Override the routes file baseUrl (or env LH_BASE_URL).
   --out <dir>             Output root (default: lighthouse-reports/). A date-stamped folder is created inside.
+  --interactive-login     For profiles without a password in the env, open a visible Chrome window
+                          on the login page and wait for a person to sign in by hand.
   --dashboard-only <dir>  Rebuild index.html / CSVs of an existing run folder from its JSON reports.
 
 Credentials, per auth profile <P> (upper-case), from the environment or a gitignored .env.lighthouse:
@@ -218,7 +221,7 @@ function profileEnv(name) {
 }
 
 /** Resolve credentials for every profile in use. Exits non-zero naming the missing variables. */
-function resolveCredentials(cfg) {
+function resolveCredentials(cfg, interactive) {
   const used = [...new Set(cfg.routes.map((r) => r.auth).filter((a) => a !== 'none'))];
   const creds = {};
   const missing = [];
@@ -236,6 +239,8 @@ function resolveCredentials(cfg) {
         die(`${e.tokenVar} expired at ${new Date(claims.exp * 1000).toISOString()}. Log in again and copy a fresh accessToken cookie (see README: "Refreshing an expired token").`);
       }
       creds[name] = { mode: 'token', token, refreshToken: process.env[e.refreshVar], claims };
+    } else if (interactive) {
+      creds[name] = { mode: 'interactive', email, loginPath: cfg.profiles[name].loginPath || '/login' };
     } else {
       missing.push(`profile "${name}": set ${e.emailVar} + ${e.passwordVar} (or ${e.tokenVar})`);
     }
@@ -299,6 +304,9 @@ async function readCookie(context, baseUrl, name) {
 
 async function login(context, cfg, profileName, cred) {
   const base = new URL(cfg.baseUrl);
+  if (cred.mode === 'interactive') {
+    return interactiveLogin(context, cfg, profileName, cred);
+  }
   if (cred.mode === 'token') {
     const page = await context.newPage();
     const cookies = [{ name: 'accessToken', value: cred.token, domain: base.hostname, path: '/' }];
@@ -340,6 +348,86 @@ async function login(context, cfg, profileName, cred) {
     return { exp: claims?.exp ? claims.exp * 1000 : null };
   } finally {
     await page.close();
+  }
+}
+
+/**
+ * Opens a visible Chrome window on the login page and waits for a person to
+ * sign in. The resulting cookies are copied into the headless measuring
+ * context, so the password never touches this script, the env or the logs.
+ */
+async function interactiveLogin(context, cfg, profileName, cred) {
+  // A plain Chrome window (not a Puppeteer-launched one) in a throwaway
+  // profile: automation-launched windows render black on some GPUs/drivers.
+  const { spawn } = require('child_process');
+  const os = require('os');
+  const puppeteer = (await import('puppeteer')).default;
+  const candidates = [
+    process.env.LH_CHROME_PATH,
+    'C:/Program Files/Google/Chrome/Application/chrome.exe',
+    'C:/Program Files (x86)/Google/Chrome/Application/chrome.exe',
+    path.join(process.env.LOCALAPPDATA || '', 'Google/Chrome/Application/chrome.exe'),
+    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
+    '/usr/bin/google-chrome',
+  ].filter(Boolean);
+  const chromePath = candidates.find((c) => fs.existsSync(c));
+  if (!chromePath) die('Could not find Chrome for the login window. Set LH_CHROME_PATH.');
+  const port = 9300 + Math.floor(Math.random() * 500);
+  const profileDir = fs.mkdtempSync(path.join(os.tmpdir(), `lh-login-${slug(profileName)}-`));
+  const child = spawn(chromePath, [
+    `--remote-debugging-port=${port}`, `--user-data-dir=${profileDir}`, '--no-first-run', '--no-default-browser-check',
+    '--new-window', cfg.baseUrl + cred.loginPath,
+  ], { stdio: 'ignore', detached: false });
+  let closed = false;
+  child.on('exit', () => { closed = true; });
+
+  let visible;
+  for (let i = 0; i < 40 && !visible; i++) {
+    try {
+      visible = await puppeteer.connect({ browserURL: `http://127.0.0.1:${port}`, defaultViewport: null });
+    } catch {
+      await new Promise((r) => setTimeout(r, 500));
+    }
+  }
+  if (!visible) die('The login window did not start (could not connect to Chrome).');
+  visible.on('disconnected', () => { closed = true; });
+
+  try {
+    console.log(`
+>>> LOG IN NOW as profile "${profileName}"${cred.email ? ` — ${cred.email}` : ''} in the Chrome window that just opened (${cred.loginPath}). Waiting up to 10 min...
+`);
+    const deadline = Date.now() + 10 * 60 * 1000;
+    let token;
+    let page;
+    while (Date.now() < deadline && !closed) {
+      const pages = await visible.pages().catch(() => []);
+      page = pages.find((pg) => pg.url().startsWith(cfg.baseUrl)) || pages[0];
+      if (page) {
+        const cookies = await page.cookies(cfg.baseUrl).catch(() => []);
+        token = cookies.find((c) => c.name === 'accessToken')?.value;
+        if (token && !new URL(page.url()).pathname.startsWith(cred.loginPath)) break;
+        token = undefined;
+      }
+      await new Promise((r) => setTimeout(r, 1000));
+    }
+    if (!token) {
+      die(closed
+        ? `The login window for "${profileName}" was closed before a login was detected. Run the command again.`
+        : `No login detected for profile "${profileName}" within 10 minutes.`);
+    }
+    await new Promise((r) => setTimeout(r, 2000)); // let the app finish setting its cookies
+    const cookies = (await page.cookies(cfg.baseUrl)).map(({ name, value, domain, path: p, expires, httpOnly, secure, sameSite }) =>
+      ({ name, value, domain, path: p, expires, httpOnly, secure, ...(sameSite ? { sameSite } : {}) }));
+    const target = await context.newPage();
+    await target.setCookie(...cookies);
+    await target.close();
+    const claims = decodeJwt(token);
+    log(`  login captured for "${profileName}" (role ${claims?.role ?? '?'}); closing the window and measuring headless`);
+    return { exp: claims?.exp ? claims.exp * 1000 : null };
+  } finally {
+    await visible.close().catch(() => {});
+    try { child.kill(); } catch {}
+    setTimeout(() => fs.rmSync(profileDir, { recursive: true, force: true }), 3000).unref();
   }
 }
 
@@ -426,7 +514,7 @@ async function main() {
   }
 
   if (envLoaded) log('Loaded credentials from .env.lighthouse');
-  const creds = resolveCredentials(cfg);
+  const creds = resolveCredentials(cfg, args.interactive);
   await checkReachable(cfg.baseUrl);
 
   const lighthouse = (await import('lighthouse')).default;

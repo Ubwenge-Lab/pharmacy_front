@@ -65,7 +65,7 @@ export default function CheckoutPage() {
         fileType,
       });
 
-      setPrescriptionId(prescriptionRes.data.id);
+      setPrescriptionId(prescriptionRes.data.prescription?.id || prescriptionRes.data.id);
       setPrescriptionUploaded(true);
       toast.success(t('success.prescriptionUploaded'));
     } catch (error: unknown) {

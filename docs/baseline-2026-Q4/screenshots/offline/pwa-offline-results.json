@@ -1,0 +1,106 @@
+{
+  "pwa": {
+    "manifest": {
+      "url": "",
+      "errors": [],
+      "data": "",
+      "parsed": {
+        "scope": "http://localhost:3000/"
+      },
+      "manifest": {
+        "display": "kUndefined",
+        "id": "http://localhost:3000/",
+        "orientation": "DEFAULT",
+        "preferRelatedApplications": false,
+        "scope": "http://localhost:3000/",
+        "startUrl": "http://localhost:3000/"
+      }
+    },
+    "installability": {
+      "installabilityErrors": [
+        {
+          "errorId": "no-manifest",
+          "errorArguments": []
+        }
+      ]
+    },
+    "swRegs": [],
+    "head": {
+      "manifestLink": null,
+      "themeColor": null,
+      "appleTouchIcon": null,
+      "icons": [
+        {
+          "href": "http://localhost:3000/favicon.ico?favicon.59c4cee3.ico",
+          "sizes": "16x16",
+          "type": "image/x-icon"
+        }
+      ],
+      "viewport": "width=device-width, initial-scale=1"
+    }
+  },
+  "scenarios": {
+    "1-landing-reload-offline": {
+      "navErr": null,
+      "ms": 1081,
+      "failed": 1,
+      "url": "chrome-error://chromewebdata/",
+      "title": "localhost",
+      "bodyTextChars": 158,
+      "bodyTextStart": "Tap the dino to play\n\nTry:\n\nChecking the network cables, modem, and router\nReconnecting to Wi-Fi\nRunning Windows Network Diagnostics\nERR_INTERNET_DISCONNECTED",
+      "visibleElements": 19
+    },
+    "2-landing-to-signup-link-offline": {
+      "clicked": true,
+      "failed": 3,
+      "failedSample": [
+        "/signup?_rsc=vusbg net::ERR_INTERNET_DISCONNECTED",
+        "/__nextjs_original-stack-frames net::ERR_INTERNET_DISCONNECTED",
+        "/signup net::ERR_INTERNET_DISCONNECTED"
+      ],
+      "url": "chrome-error://chromewebdata/",
+      "title": "localhost",
+      "bodyTextChars": 158,
+      "bodyTextStart": "Tap the dino to play\n\nTry:\n\nChecking the network cables, modem, and router\nReconnecting to Wi-Fi\nRunning Windows Network Diagnostics\nERR_INTERNET_DISCONNECTED",
+      "visibleElements": 19
+    },
+    "3-login-submit-offline": {
+      "hasForm": true,
+      "toast": "Network Error",
+      "msWaited": 4036,
+      "failed": 2,
+      "failedSample": [
+        "http://localhost:4000/api/auth/login net::ERR_CONNECTION_REFUSED",
+        "http://localhost:4000/api/auth/login net::ERR_CONNECTION_REFUSED"
+      ],
+      "url": "http://localhost:3000/login",
+      "title": "E-Vuze Healthcare Hub",
+      "bodyTextChars": 194,
+      "bodyTextStart": "EN\n|\nFR\n|\nRW\nWelcome Back!\n\nLogin to your account\n\nEmail\nPassword\nForgot Password?\nLogin\nOR\n\nDon't have an account? Sign up\n\n© 2026 E-Vuze Healthcare Platform. ",
+      "visibleElements": 55
+    },
+    "4-signup-reload-offline": {
+      "navErr": null,
+      "failed": 1,
+      "url": "chrome-error://chromewebdata/",
+      "title": "localhost",
+      "bodyTextChars": 158,
+      "bodyTextStart": "Tap the dino to play\n\nTry:\n\nChecking the network cables, modem, and router\nReconnecting to Wi-Fi\nRunning Windows Network Diagnostics\nERR_INTERNET_DISCONNECTED",
+      "visibleElements": 19
+    },
+    "5-signup-after-reconnect-no-reload": {
+      "url": "chrome-error://chromewebdata/",
+      "title": "localhost",
+      "bodyTextChars": 158,
+      "bodyTextStart": "Tap the dino to play\n\nTry:\n\nChecking the network cables, modem, and router\nReconnecting to Wi-Fi\nRunning Windows Network Diagnostics\nERR_INTERNET_DISCONNECTED",
+      "visibleElements": 19
+    },
+    "0-landing-online-reference": {
+      "url": "http://localhost:3000/",
+      "title": "E-Vuze Healthcare Hub",
+      "bodyTextChars": 792,
+      "bodyTextStart": "E-Vuze\n\nHealthcare Platform\n\nEN\n|\nFR\n|\nRW\nLogin\nSign Up\nRwanda's Healthcare Platform\nConnecting Patients with Nearby Pharmacies\n\nE-Vuze helps patients find near",
+      "visibleElements": 63
+    }
+  }
+}

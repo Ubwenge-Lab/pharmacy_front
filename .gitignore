@@ -48,6 +48,9 @@ md/
 skills.md
 strategy.md
 
+# generated binary reports (keep markdown + HTML; skip Word docs)
+docs/**/*.docx
+
 # personal reference screenshots (kept locally, not tracked)
 /public/processes-assigned to cashier.png
 /public/weird background picture.png

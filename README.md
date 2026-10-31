@@ -99,6 +99,33 @@ The known targets (also listed as commented toggles in
 | npm run build | Production build + typecheck |
 | npm run start | Run production build |
 | npm run lint | Lint code |
+| npm test | Run the Jest test suite |
+| npm run test:cov | Run tests with coverage report |
+
+---
+
+## Running CI gates locally
+
+Run these before pushing to catch failures before CI does:
+
+```bash
+# 1. Lint (no auto-fix — mirrors what CI runs)
+npx eslint .
+
+# 2. Type check
+npx tsc --noEmit
+
+# 3. Tests with coverage
+npm run test:cov
+
+# 4. Production build
+npm run build
+
+# 5. Dependency vulnerability check
+npm audit --audit-level=high
+```
+
+The coverage threshold is set in `jest.config.js` (`coverageThreshold.global.lines`). After running `npm run test:cov`, record the output percentage and bump the threshold to match — it should only ever go up.
 
 ---
 

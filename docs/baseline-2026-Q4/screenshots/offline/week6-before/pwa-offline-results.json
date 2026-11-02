@@ -1,0 +1,77 @@
+{
+  "pwa": {
+    "head": {
+      "manifestLink": null,
+      "themeColor": null,
+      "appleTouchIcon": null
+    },
+    "manifestUrl": "",
+    "manifestErrors": [],
+    "parsedManifest": null,
+    "installability": {
+      "installabilityErrors": [
+        {
+          "errorId": "no-manifest",
+          "errorArguments": []
+        }
+      ]
+    },
+    "sw": {
+      "controlled": false,
+      "registrations": []
+    }
+  },
+  "scenarios": {
+    "0-landing-online-reference": {
+      "url": "http://localhost:3000/",
+      "title": "E-Vuze Healthcare Hub",
+      "bodyTextChars": 792,
+      "bodyTextStart": "E-Vuze\n\nHealthcare Platform\n\nEN\n|\nFR\n|\nRW\nLogin\nSign Up\nRwanda's Healthcare Platform\nConnecting Patients with Nearby Pharmacies\n\nE-Vuze help",
+      "visibleElements": 61
+    },
+    "1-landing-reload-offline": {
+      "navErr": null,
+      "ms": 1301,
+      "failed": 1,
+      "url": "chrome-error://chromewebdata/",
+      "title": "localhost",
+      "bodyTextChars": 158,
+      "bodyTextStart": "Tap the dino to play\n\nTry:\n\nChecking the network cables, modem, and router\nReconnecting to Wi-Fi\nRunning Windows Network Diagnostics\nERR_INT",
+      "visibleElements": 19
+    },
+    "2-landing-to-signup-link-offline": {
+      "clicked": true,
+      "failed": 1,
+      "url": "http://localhost:3000/signup",
+      "title": "E-Vuze Healthcare Hub",
+      "bodyTextChars": 405,
+      "bodyTextStart": "EN\n|\nFR\n|\nRW\nCreate Account\n\nSign up to get started\n\nPatient\nPharmacy Owner\nHospital\nFirst Name\nLast Name\nEmail\nPhone Number\nDate of Birth\nG",
+      "visibleElements": 106
+    },
+    "3-login-submit-offline": {
+      "toast": "Network Error",
+      "failed": 2,
+      "url": "http://localhost:3000/login",
+      "title": "E-Vuze Healthcare Hub",
+      "bodyTextChars": 194,
+      "bodyTextStart": "EN\n|\nFR\n|\nRW\nWelcome Back!\n\nLogin to your account\n\nEmail\nPassword\nForgot Password?\nLogin\nOR\n\nDon't have an account? Sign up\n\n© 2026 E-Vuze H",
+      "visibleElements": 53
+    },
+    "4-signup-reload-offline": {
+      "navErr": null,
+      "failed": 1,
+      "url": "chrome-error://chromewebdata/",
+      "title": "localhost",
+      "bodyTextChars": 158,
+      "bodyTextStart": "Tap the dino to play\n\nTry:\n\nChecking the network cables, modem, and router\nReconnecting to Wi-Fi\nRunning Windows Network Diagnostics\nERR_INT",
+      "visibleElements": 19
+    },
+    "5-signup-after-reconnect-no-reload": {
+      "url": "chrome-error://chromewebdata/",
+      "title": "localhost",
+      "bodyTextChars": 158,
+      "bodyTextStart": "Tap the dino to play\n\nTry:\n\nChecking the network cables, modem, and router\nReconnecting to Wi-Fi\nRunning Windows Network Diagnostics\nERR_INT",
+      "visibleElements": 19
+    }
+  }
+}

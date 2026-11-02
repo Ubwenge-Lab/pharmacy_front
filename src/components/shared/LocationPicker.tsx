@@ -27,6 +27,12 @@ interface LocationPickerProps {
   label?: string;
   /** Height of the map container. Defaults to "300px". */
   height?: string;
+  /**
+   * Don't load Leaflet or any map tiles until the user opens the map (or taps
+   * "Use My Location"). Use on pages where the map would otherwise be the
+   * heaviest thing on first load, e.g. /signup.
+   */
+  lazy?: boolean;
 }
 
 // Kigali city centre as the default map centre
@@ -40,8 +46,15 @@ export default function LocationPicker({
   required = false,
   label = 'Pin Your Location',
   height = '300px',
+  lazy = false,
 }: LocationPickerProps) {
   const mapRef = useRef<HTMLDivElement>(null);
+  // In lazy mode the map stays a placeholder until the user asks for it
+  const [mapActive, setMapActive] = useState(!lazy || (latitude !== undefined && longitude !== undefined));
+  // Latest coordinates, read when Leaflet finishes loading — in lazy mode the
+  // user may have pinned via GPS while the import was still in flight.
+  const coordsRef = useRef({ latitude, longitude });
+  coordsRef.current = { latitude, longitude };
   // Store Leaflet map + marker instances in refs so React doesn't re-create them
   const leafletMapRef = useRef<LeafletMap | null>(null);
   const markerRef = useRef<LeafletMarker | null>(null);
@@ -53,6 +66,7 @@ export default function LocationPicker({
   useEffect(() => {
     let isMounted = true;
     if (typeof window === 'undefined') return;
+    if (!mapActive) return; // lazy mode: wait until the user opens the map
     if (leafletMapRef.current) return; // already initialised
 
     // Dynamic import keeps Leaflet out of the SSR bundle
@@ -73,6 +87,7 @@ export default function LocationPicker({
         shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
       });
 
+      const { latitude, longitude } = coordsRef.current;
       const initialCenter: [number, number] =
         latitude !== undefined && longitude !== undefined
           ? [latitude, longitude]
@@ -128,8 +143,8 @@ export default function LocationPicker({
         markerRef.current = null;
       }
     };
-    // Run only once on mount
-  }, []);
+    // Run once the map is active (on mount, unless lazy)
+  }, [mapActive]);
 
   // ── Sync external lat/lng changes into the map ───────────────────────────
   useEffect(() => {
@@ -162,6 +177,7 @@ export default function LocationPicker({
     }
     setGpsLoading(true);
     setGpsError('');
+    setMapActive(true);
     navigator.geolocation.getCurrentPosition(
       (pos) => {
         const lat = parseFloat(pos.coords.latitude.toFixed(6));
@@ -241,11 +257,23 @@ export default function LocationPicker({
         Click on the map to pin your exact location, or drag the pin to adjust.
       </p>
 
-      {/* Map container */}
-      <div
-        ref={mapRef}
-        style={{ height, width: '100%', borderRadius: '0.75rem', border: hasPinned ? '2px solid var(--color-brand-teal)' : '2px solid #E5E7EB', overflow: 'hidden' }}
-      />
+      {/* Map container (a same-size placeholder until opened, in lazy mode) */}
+      {mapActive ? (
+        <div
+          ref={mapRef}
+          style={{ height, width: '100%', borderRadius: '0.75rem', border: hasPinned ? '2px solid var(--color-brand-teal)' : '2px solid #E5E7EB', overflow: 'hidden' }}
+        />
+      ) : (
+        <button
+          type="button"
+          onClick={() => setMapActive(true)}
+          style={{ height }}
+          className="w-full flex flex-col items-center justify-center gap-2 rounded-xl border-2 border-dashed border-gray-200 bg-gray-50 text-sm font-medium text-teal-700 hover:bg-teal-50 transition-all"
+        >
+          <MapPinIcon className="w-6 h-6" />
+          Tap to open the map
+        </button>
+      )}
 
       {/* Coordinate display */}
       {hasPinned ? (

@@ -1,0 +1,107 @@
+{
+  "pwa": {
+    "head": {
+      "manifestLink": "http://localhost:3000/manifest.webmanifest",
+      "themeColor": "#1E4D8C",
+      "appleTouchIcon": "http://localhost:3000/apple-icon.png?apple-icon.083e7c6f.png"
+    },
+    "manifestUrl": "http://localhost:3000/manifest.webmanifest",
+    "manifestErrors": [],
+    "parsedManifest": {
+      "id": "/",
+      "name": "E-Vuze Healthcare Hub",
+      "short_name": "E-Vuze",
+      "description": "Rwanda's unified healthcare management system",
+      "start_url": "/",
+      "scope": "/",
+      "display": "standalone",
+      "background_color": "#F8FBFF",
+      "theme_color": "#1E4D8C",
+      "icons": [
+        {
+          "src": "/icons/icon-192.png",
+          "sizes": "192x192",
+          "type": "image/png",
+          "purpose": "any"
+        },
+        {
+          "src": "/icons/icon-512.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "any"
+        },
+        {
+          "src": "/icons/icon-maskable-512.png",
+          "sizes": "512x512",
+          "type": "image/png",
+          "purpose": "maskable"
+        }
+      ]
+    },
+    "installability": {
+      "installabilityErrors": []
+    },
+    "sw": {
+      "controlled": true,
+      "registrations": [
+        {
+          "scope": "http://localhost:3000/",
+          "state": "activated"
+        }
+      ]
+    }
+  },
+  "scenarios": {
+    "0-landing-online-reference": {
+      "url": "http://localhost:3000/",
+      "title": "E-Vuze Healthcare Hub",
+      "bodyTextChars": 792,
+      "bodyTextStart": "E-Vuze\n\nHealthcare Platform\n\nEN\n|\nFR\n|\nRW\nLogin\nSign Up\nRwanda's Healthcare Platform\nConnecting Patients with Nearby Pharmacies\n\nE-Vuze help",
+      "visibleElements": 61
+    },
+    "1-landing-reload-offline": {
+      "navErr": null,
+      "ms": 1124,
+      "failed": 1,
+      "url": "http://localhost:3000/",
+      "title": "Offline · E-Vuze",
+      "bodyTextChars": 166,
+      "bodyTextStart": "E-Vuze\n\nYou're offline\n\nWe can't reach E-Vuze right now. Check your connection and try again.\n\nTry again\n\nThis page will reload automaticall",
+      "visibleElements": 7
+    },
+    "2-landing-to-signup-link-offline": {
+      "clicked": true,
+      "failed": 1,
+      "url": "http://localhost:3000/signup",
+      "title": "E-Vuze Healthcare Hub",
+      "bodyTextChars": 425,
+      "bodyTextStart": "EN\n|\nFR\n|\nRW\nCreate Account\n\nSign up to get started\n\nPatient\nPharmacy Owner\nHospital\nFirst Name\nLast Name\nEmail\nPhone Number\nDate of Birth\nG",
+      "visibleElements": 109
+    },
+    "3-login-submit-offline": {
+      "toast": "Network Error",
+      "failed": 2,
+      "url": "http://localhost:3000/login",
+      "title": "E-Vuze Healthcare Hub",
+      "bodyTextChars": 194,
+      "bodyTextStart": "EN\n|\nFR\n|\nRW\nWelcome Back!\n\nLogin to your account\n\nEmail\nPassword\nForgot Password?\nLogin\nOR\n\nDon't have an account? Sign up\n\n© 2026 E-Vuze H",
+      "visibleElements": 53
+    },
+    "4-signup-reload-offline": {
+      "navErr": null,
+      "failed": 1,
+      "url": "http://localhost:3000/signup",
+      "title": "Offline · E-Vuze",
+      "bodyTextChars": 166,
+      "bodyTextStart": "E-Vuze\n\nYou're offline\n\nWe can't reach E-Vuze right now. Check your connection and try again.\n\nTry again\n\nThis page will reload automaticall",
+      "visibleElements": 7
+    },
+    "5-signup-after-reconnect-no-reload": {
+      "url": "http://localhost:3000/signup",
+      "title": "E-Vuze Healthcare Hub",
+      "bodyTextChars": 425,
+      "bodyTextStart": "EN\n|\nFR\n|\nRW\nCreate Account\n\nSign up to get started\n\nPatient\nPharmacy Owner\nHospital\nFirst Name\nLast Name\nEmail\nPhone Number\nDate of Birth\nG",
+      "visibleElements": 109
+    }
+  }
+}

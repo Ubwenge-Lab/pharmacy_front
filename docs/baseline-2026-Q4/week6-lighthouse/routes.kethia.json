@@ -1,0 +1,13 @@
+{
+  "$comment": "Kethia — surfaces 9 (public pages) and 10 (PWA shell entry pages), plus the patient pharmacy directory. Run against a local production build with --base-url http://localhost:3000.",
+  "baseUrl": "http://localhost:3000",
+  "runs": 3,
+  "devices": ["mobile", "desktop"],
+  "profiles": { "patient": { "loginPath": "/login", "role": "PATIENT" } },
+  "routes": [
+    { "surface": "landing", "path": "/", "auth": "none" },
+    { "surface": "signup", "path": "/signup", "auth": "none" },
+    { "surface": "login", "path": "/login", "auth": "none" },
+    { "surface": "pharmacy-directory", "path": "/patient/pharmacies", "auth": "patient" }
+  ]
+}

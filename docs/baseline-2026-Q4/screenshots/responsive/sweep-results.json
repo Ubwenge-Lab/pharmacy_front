@@ -1,0 +1,1150 @@
+[
+  {
+    "surface": "landing",
+    "path": "/",
+    "width": 390,
+    "finalUrl": "/",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 390,
+      "viewport": 390,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "a \"Login\"",
+        "w": 81,
+        "h": 40,
+        "inline": true
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "landing",
+    "path": "/",
+    "width": 768,
+    "finalUrl": "/",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 768,
+      "viewport": 768,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "a \"Login\"",
+        "w": 81,
+        "h": 40,
+        "inline": true
+      },
+      {
+        "el": "a \"Sign Up\"",
+        "w": 93,
+        "h": 36,
+        "inline": true
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "signup",
+    "path": "/signup",
+    "width": 390,
+    "finalUrl": "/signup",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 390,
+      "viewport": 390,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "select[select-one] \"Male Female Other\"",
+        "w": 155,
+        "h": 43,
+        "inline": false
+      },
+      {
+        "el": "button[button] \"Use My Location\"",
+        "w": 142,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"+\"",
+        "w": 30,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"−\"",
+        "w": 30,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"Leaflet\"",
+        "w": 51,
+        "h": 14,
+        "inline": true
+      },
+      {
+        "el": "a \"OpenStreetMap\"",
+        "w": 85,
+        "h": 14,
+        "inline": false
+      },
+      {
+        "el": "button[button] \"\"",
+        "w": 16,
+        "h": 16,
+        "inline": false
+      },
+      {
+        "el": "a \"Sign in\"",
+        "w": 46,
+        "h": 17,
+        "inline": true
+      }
+    ],
+    "tables": [],
+    "modals": [],
+    "tabs": {
+      "Patient": {
+        "overflow": {
+          "scrollWidth": 390,
+          "viewport": 390,
+          "overflowPx": 0
+        },
+        "overflowers": [],
+        "smallTaps": [
+          {
+            "el": "button[submit] \"EN\"",
+            "w": 35,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"FR\"",
+            "w": 33,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"RW\"",
+            "w": 39,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "select[select-one] \"Male Female Other\"",
+            "w": 155,
+            "h": 43,
+            "inline": false
+          },
+          {
+            "el": "button[button] \"Use My Location\"",
+            "w": 142,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"+\"",
+            "w": 30,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"−\"",
+            "w": 30,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"Leaflet\"",
+            "w": 51,
+            "h": 14,
+            "inline": true
+          },
+          {
+            "el": "a \"OpenStreetMap\"",
+            "w": 85,
+            "h": 14,
+            "inline": false
+          },
+          {
+            "el": "button[button] \"\"",
+            "w": 16,
+            "h": 16,
+            "inline": false
+          },
+          {
+            "el": "a \"Sign in\"",
+            "w": 46,
+            "h": 17,
+            "inline": true
+          }
+        ],
+        "tables": [],
+        "modals": []
+      },
+      "Hospital": {
+        "overflow": {
+          "scrollWidth": 390,
+          "viewport": 390,
+          "overflowPx": 0
+        },
+        "overflowers": [],
+        "smallTaps": [
+          {
+            "el": "button[submit] \"EN\"",
+            "w": 35,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"FR\"",
+            "w": 33,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"RW\"",
+            "w": 39,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[button] \"Use My Location\"",
+            "w": 142,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"+\"",
+            "w": 30,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"−\"",
+            "w": 30,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"Leaflet\"",
+            "w": 51,
+            "h": 14,
+            "inline": true
+          },
+          {
+            "el": "a \"OpenStreetMap\"",
+            "w": 85,
+            "h": 14,
+            "inline": false
+          },
+          {
+            "el": "button[button] \"\"",
+            "w": 16,
+            "h": 16,
+            "inline": false
+          },
+          {
+            "el": "a \"Sign in\"",
+            "w": 46,
+            "h": 17,
+            "inline": true
+          }
+        ],
+        "tables": [],
+        "modals": []
+      }
+    }
+  },
+  {
+    "surface": "signup",
+    "path": "/signup",
+    "width": 768,
+    "finalUrl": "/signup",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 768,
+      "viewport": 768,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"Patient\"",
+        "w": 111,
+        "h": 36,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"Pharmacy Owner\"",
+        "w": 181,
+        "h": 36,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"Hospital\"",
+        "w": 120,
+        "h": 36,
+        "inline": false
+      },
+      {
+        "el": "select[select-one] \"Male Female Other\"",
+        "w": 248,
+        "h": 43,
+        "inline": false
+      },
+      {
+        "el": "button[button] \"Use My Location\"",
+        "w": 142,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"+\"",
+        "w": 30,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"−\"",
+        "w": 30,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"Leaflet\"",
+        "w": 51,
+        "h": 14,
+        "inline": true
+      },
+      {
+        "el": "a \"OpenStreetMap\"",
+        "w": 85,
+        "h": 14,
+        "inline": false
+      },
+      {
+        "el": "button[button] \"\"",
+        "w": 16,
+        "h": 16,
+        "inline": false
+      },
+      {
+        "el": "a \"Sign in\"",
+        "w": 46,
+        "h": 17,
+        "inline": true
+      }
+    ],
+    "tables": [],
+    "modals": [],
+    "tabs": {
+      "Patient": {
+        "overflow": {
+          "scrollWidth": 768,
+          "viewport": 768,
+          "overflowPx": 0
+        },
+        "overflowers": [],
+        "smallTaps": [
+          {
+            "el": "button[submit] \"EN\"",
+            "w": 35,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"FR\"",
+            "w": 33,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"RW\"",
+            "w": 39,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"Patient\"",
+            "w": 111,
+            "h": 36,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"Pharmacy Owner\"",
+            "w": 181,
+            "h": 36,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"Hospital\"",
+            "w": 120,
+            "h": 36,
+            "inline": false
+          },
+          {
+            "el": "select[select-one] \"Male Female Other\"",
+            "w": 248,
+            "h": 43,
+            "inline": false
+          },
+          {
+            "el": "button[button] \"Use My Location\"",
+            "w": 142,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"+\"",
+            "w": 30,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"−\"",
+            "w": 30,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"Leaflet\"",
+            "w": 51,
+            "h": 14,
+            "inline": true
+          },
+          {
+            "el": "a \"OpenStreetMap\"",
+            "w": 85,
+            "h": 14,
+            "inline": false
+          },
+          {
+            "el": "button[button] \"\"",
+            "w": 16,
+            "h": 16,
+            "inline": false
+          },
+          {
+            "el": "a \"Sign in\"",
+            "w": 46,
+            "h": 17,
+            "inline": true
+          }
+        ],
+        "tables": [],
+        "modals": []
+      },
+      "Hospital": {
+        "overflow": {
+          "scrollWidth": 768,
+          "viewport": 768,
+          "overflowPx": 0
+        },
+        "overflowers": [],
+        "smallTaps": [
+          {
+            "el": "button[submit] \"EN\"",
+            "w": 35,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"FR\"",
+            "w": 33,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"RW\"",
+            "w": 39,
+            "h": 28,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"Patient\"",
+            "w": 111,
+            "h": 36,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"Pharmacy Owner\"",
+            "w": 181,
+            "h": 36,
+            "inline": false
+          },
+          {
+            "el": "button[submit] \"Hospital\"",
+            "w": 120,
+            "h": 36,
+            "inline": false
+          },
+          {
+            "el": "button[button] \"Use My Location\"",
+            "w": 142,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"+\"",
+            "w": 30,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"−\"",
+            "w": 30,
+            "h": 30,
+            "inline": false
+          },
+          {
+            "el": "a \"Leaflet\"",
+            "w": 51,
+            "h": 14,
+            "inline": true
+          },
+          {
+            "el": "a \"OpenStreetMap\"",
+            "w": 85,
+            "h": 14,
+            "inline": false
+          },
+          {
+            "el": "button[button] \"\"",
+            "w": 16,
+            "h": 16,
+            "inline": false
+          },
+          {
+            "el": "a \"Sign in\"",
+            "w": 46,
+            "h": 17,
+            "inline": true
+          }
+        ],
+        "tables": [],
+        "modals": []
+      }
+    }
+  },
+  {
+    "surface": "login",
+    "path": "/login",
+    "width": 390,
+    "finalUrl": "/login",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 390,
+      "viewport": 390,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[button] \"\"",
+        "w": 20,
+        "h": 20,
+        "inline": false
+      },
+      {
+        "el": "a \"Forgot Password?\"",
+        "w": 120,
+        "h": 17,
+        "inline": false
+      },
+      {
+        "el": "a \"Sign up\"",
+        "w": 58,
+        "h": 20,
+        "inline": true
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "login",
+    "path": "/login",
+    "width": 768,
+    "finalUrl": "/login",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 768,
+      "viewport": 768,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[button] \"\"",
+        "w": 20,
+        "h": 20,
+        "inline": false
+      },
+      {
+        "el": "a \"Forgot Password?\"",
+        "w": 120,
+        "h": 17,
+        "inline": false
+      },
+      {
+        "el": "a \"Sign up\"",
+        "w": 58,
+        "h": 20,
+        "inline": true
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "forgot-password",
+    "path": "/forgot-password",
+    "width": 390,
+    "finalUrl": "/forgot-password",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 390,
+      "viewport": 390,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "a \"← Back to Login\"",
+        "w": 110,
+        "h": 17,
+        "inline": false
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "forgot-password",
+    "path": "/forgot-password",
+    "width": 768,
+    "finalUrl": "/forgot-password",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 768,
+      "viewport": 768,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "a \"← Back to Login\"",
+        "w": 110,
+        "h": 17,
+        "inline": false
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "reset-password",
+    "path": "/reset-password",
+    "width": 390,
+    "finalUrl": "/reset-password",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 390,
+      "viewport": 390,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[button] \"\"",
+        "w": 16,
+        "h": 16,
+        "inline": false
+      },
+      {
+        "el": "a \"← Back to Login\"",
+        "w": 110,
+        "h": 17,
+        "inline": false
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "reset-password",
+    "path": "/reset-password",
+    "width": 768,
+    "finalUrl": "/reset-password",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 768,
+      "viewport": 768,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[button] \"\"",
+        "w": 16,
+        "h": 16,
+        "inline": false
+      },
+      {
+        "el": "a \"← Back to Login\"",
+        "w": 110,
+        "h": 17,
+        "inline": false
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "verify-email",
+    "path": "/verify-email",
+    "width": 390,
+    "finalUrl": "/verify-email",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 390,
+      "viewport": 390,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"Resend Code\"",
+        "w": 90,
+        "h": 20,
+        "inline": false
+      },
+      {
+        "el": "a \"← Back to Login\"",
+        "w": 109,
+        "h": 17,
+        "inline": false
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "verify-email",
+    "path": "/verify-email",
+    "width": 768,
+    "finalUrl": "/verify-email",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 768,
+      "viewport": 768,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[submit] \"EN\"",
+        "w": 35,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"FR\"",
+        "w": 33,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"RW\"",
+        "w": 39,
+        "h": 28,
+        "inline": false
+      },
+      {
+        "el": "button[submit] \"Resend Code\"",
+        "w": 90,
+        "h": 20,
+        "inline": false
+      },
+      {
+        "el": "a \"← Back to Login\"",
+        "w": 109,
+        "h": 17,
+        "inline": false
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "hospital-register",
+    "path": "/hospital/register",
+    "width": 390,
+    "finalUrl": "/hospital/register",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 390,
+      "viewport": 390,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[button] \"Use My Location\"",
+        "w": 142,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"+\"",
+        "w": 30,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"−\"",
+        "w": 30,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"Leaflet\"",
+        "w": 51,
+        "h": 14,
+        "inline": true
+      },
+      {
+        "el": "a \"OpenStreetMap\"",
+        "w": 85,
+        "h": 14,
+        "inline": false
+      },
+      {
+        "el": "button[button] \"\"",
+        "w": 16,
+        "h": 16,
+        "inline": false
+      },
+      {
+        "el": "a \"Sign in\"",
+        "w": 46,
+        "h": 17,
+        "inline": true
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "hospital-register",
+    "path": "/hospital/register",
+    "width": 768,
+    "finalUrl": "/hospital/register",
+    "reached": true,
+    "overflow": {
+      "scrollWidth": 768,
+      "viewport": 768,
+      "overflowPx": 0
+    },
+    "overflowers": [],
+    "smallTaps": [
+      {
+        "el": "button[button] \"Use My Location\"",
+        "w": 142,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"+\"",
+        "w": 30,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"−\"",
+        "w": 30,
+        "h": 30,
+        "inline": false
+      },
+      {
+        "el": "a \"Leaflet\"",
+        "w": 51,
+        "h": 14,
+        "inline": true
+      },
+      {
+        "el": "a \"OpenStreetMap\"",
+        "w": 85,
+        "h": 14,
+        "inline": false
+      },
+      {
+        "el": "button[button] \"\"",
+        "w": 16,
+        "h": 16,
+        "inline": false
+      },
+      {
+        "el": "a \"Sign in\"",
+        "w": 46,
+        "h": 17,
+        "inline": true
+      }
+    ],
+    "tables": [],
+    "modals": []
+  },
+  {
+    "surface": "super-admin-login",
+    "path": "/super-admin/login",
+    "width": 390,
+    "finalUrl": "/login",
+    "reached": false
+  },
+  {
+    "surface": "super-admin-login",
+    "path": "/super-admin/login",
+    "width": 768,
+    "finalUrl": "/login",
+    "reached": false
+  },
+  {
+    "surface": "pending-approval",
+    "path": "/pending-approval",
+    "width": 390,
+    "finalUrl": "/login",
+    "reached": false
+  },
+  {
+    "surface": "pending-approval",
+    "path": "/pending-approval",
+    "width": 768,
+    "finalUrl": "/login",
+    "reached": false
+  },
+  {
+    "surface": "pharmacy-directory",
+    "path": "/patient/pharmacies",
+    "width": 390,
+    "finalUrl": "/",
+    "reached": false
+  },
+  {
+    "surface": "pharmacy-directory",
+    "path": "/patient/pharmacies",
+    "width": 768,
+    "finalUrl": "/",
+    "reached": false
+  }
+]

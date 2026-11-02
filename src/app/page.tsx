@@ -1,8 +1,7 @@
 // frontend/src/app/page.tsx 
 'use client';
 
-import * as Sentry from '@sentry/nextjs';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
@@ -55,18 +54,10 @@ export default function Home() {
 
   const patientEnabled = isPatientEnabled();
 
-  if (loading) {
-
-    return (
-      <div className="min-h-screen flex items-center justify-center" style={{ background: '#F0F7FF' }}>
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 rounded-full animate-spin mx-auto mb-4 border-brand-teal border-t-transparent" />
-          <p className="font-medium text-brand-navy">{t('landing.loadingDashboard')}</p>
-        </div>
-      </div>
-    );
-  }
-
+  // Render the landing page while the session check is still running instead of
+  // a spinner: the spinner was what got server-rendered, so the hero (the LCP
+  // element) only appeared after all the JS had loaded. Logged-in users are
+  // still redirected by the effect above as soon as the check finishes.
   if (user) {
     return (
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#F0F7FF' }}>

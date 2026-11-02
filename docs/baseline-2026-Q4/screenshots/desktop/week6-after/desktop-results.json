@@ -1,0 +1,28 @@
+{
+  "landing": {
+    "url": "http://localhost:3000/",
+    "title": "E-Vuze Healthcare Hub",
+    "textChars": 792
+  },
+  "signup": {
+    "url": "http://localhost:3000/signup",
+    "title": "E-Vuze Healthcare Hub",
+    "textChars": 987
+  },
+  "swControlled": true,
+  "offlineLanding": {
+    "url": "http://localhost:3000/",
+    "title": "Offline · E-Vuze",
+    "textChars": 166
+  },
+  "offlineSignup": {
+    "url": "http://localhost:3000/signup",
+    "title": "Offline · E-Vuze",
+    "textChars": 166
+  },
+  "reconnected": {
+    "url": "http://localhost:3000/signup",
+    "title": "E-Vuze Healthcare Hub",
+    "textChars": 987
+  }
+}

@@ -295,6 +295,7 @@ export default function SignupPage() {
 
               {/* Map picker — optional for patients */}
               <LocationPicker
+                lazy
                 latitude={patientForm.latitude}
                 longitude={patientForm.longitude}
                 onChange={(lat, lng) => setPatientForm(f => ({ ...f, latitude: lat, longitude: lng }))}
@@ -416,6 +417,7 @@ export default function SignupPage() {
 
               {/* Map picker — REQUIRED for pharmacies */}
               <LocationPicker
+                lazy
                 latitude={pharmacyForm.latitude}
                 longitude={pharmacyForm.longitude}
                 onChange={(lat, lng) => setPharmacyForm(f => ({ ...f, latitude: lat, longitude: lng }))}
@@ -575,6 +577,7 @@ export default function SignupPage() {
 
               {/* Map picker — REQUIRED for hospitals */}
               <LocationPicker
+                lazy
                 latitude={hospitalForm.latitude}
                 longitude={hospitalForm.longitude}
                 onChange={(lat, lng) => setHospitalForm(f => ({ ...f, latitude: lat, longitude: lng }))}

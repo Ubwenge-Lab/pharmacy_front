@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lighthouse Baseline</title>
+<style>
+:root {
+  --bg: #f7f7f5; --surface: #ffffff; --text: #1b1d1f; --muted: #6b7076; --border: #e3e4e1;
+  --good-bg: #e3f4ea; --good-fg: #106b3a; --warn-bg: #fdf1d8; --warn-fg: #8a5a00; --bad-bg: #fbe4e2; --bad-fg: #a8231a;
+  --accent: #1d5fd1; --row-fail: #fff6f5;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #131517; --surface: #1b1e21; --text: #e8eaec; --muted: #9aa1a8; --border: #2c3035;
+    --good-bg: #133524; --good-fg: #7fdba5; --warn-bg: #3a2d10; --warn-fg: #f3c56b; --bad-bg: #42191a; --bad-fg: #ff9d94;
+    --accent: #7aa9ff; --row-fail: #241718;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #131517; --surface: #1b1e21; --text: #e8eaec; --muted: #9aa1a8; --border: #2c3035;
+  --good-bg: #133524; --good-fg: #7fdba5; --warn-bg: #3a2d10; --warn-fg: #f3c56b; --bad-bg: #42191a; --bad-fg: #ff9d94;
+  --accent: #7aa9ff; --row-fail: #241718;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 14px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 1400px; margin: 0 auto; padding: 24px 16px 48px; }
+h1 { font-size: 22px; margin: 0 0 4px; }
+h2 { font-size: 16px; margin: 32px 0 8px; }
+a { color: var(--accent); }
+.muted { color: var(--muted); }
+.meta { color: var(--muted); font-size: 13px; display: flex; flex-wrap: wrap; gap: 4px 18px; margin-bottom: 16px; }
+.kpis { display: flex; gap: 12px; flex-wrap: wrap; margin: 16px 0; }
+.kpi { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 14px; min-width: 150px; }
+.kpi b { display: block; font-size: 22px; font-variant-numeric: tabular-nums; }
+.wrap { overflow-x: auto; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
+table { border-collapse: collapse; width: 100%; font-variant-numeric: tabular-nums; }
+th, td { padding: 8px 10px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: top; white-space: nowrap; }
+th { font-size: 12px; text-transform: uppercase; letter-spacing: .03em; color: var(--muted); background: var(--surface); position: sticky; top: 0; }
+th small { display: block; text-transform: none; letter-spacing: 0; font-weight: 400; }
+td.num, th.num { text-align: right; }
+td.good { background: var(--good-bg); color: var(--good-fg); }
+td.warn { background: var(--warn-bg); color: var(--warn-fg); }
+td.bad { background: var(--bad-bg); color: var(--bad-fg); font-weight: 600; }
+tr.failed > td:first-child { box-shadow: inset 3px 0 0 var(--bad-fg); }
+tr.failed { background: var(--row-fail); }
+.surface { font-weight: 600; }
+.path { font-size: 12px; }
+.err { font-size: 12px; color: var(--bad-fg); white-space: normal; max-width: 320px; }
+.bad-text { color: var(--bad-fg); font-weight: 600; }
+.pill { display: inline-block; padding: 1px 8px; border-radius: 99px; font-size: 12px; border: 1px solid var(--border); }
+.pill.good { background: var(--good-bg); color: var(--good-fg); }
+.pill.warn { background: var(--warn-bg); color: var(--warn-fg); }
+.pill.bad { background: var(--bad-bg); color: var(--bad-fg); }
+.runs { font-size: 12px; }
+td.fixes { white-space: normal; min-width: 280px; max-width: 380px; font-size: 12px; }
+td.fixes ol { margin: 0; padding-left: 16px; }
+.legend { font-size: 12px; color: var(--muted); margin-top: 8px; }
+.legend span { display: inline-block; padding: 0 6px; border-radius: 4px; margin-right: 6px; }
+details summary { cursor: pointer; margin: 32px 0 8px; font-weight: 600; }
+</style>
+</head>
+<body>
+<main>
+<h1>Lighthouse baseline</h1>
+<div class="meta">
+  <span>http://localhost:3000</span>
+  <span>Generated 2026-10-30 10:21 UTC</span>
+  <span>Lighthouse 13.5.0</span>
+  <span>Chrome/156.0.8078.74</span>
+  <span>Median of 5 runs</span>
+  <span>Commit 8dfad8c</span>
+  <span>Routes: lighthouse/routes.kethia.json</span>
+</div>
+<div class="kpis">
+  <div class="kpi"><b>6</b>surface × device</div>
+  <div class="kpi"><b>3</b>meet score target (≥ 90)</div>
+  <div class="kpi"><b>0</b>failed / not measured</div>
+  <div class="kpi"><b>30</b>Lighthouse runs</div>
+</div>
+<div class="wrap">
+<table>
+<thead><tr>
+  <th>Surface</th><th>Device</th><th>Spread</th>
+  <th class="num">Score<small>≥ 90</small></th><th class="num">LCP<small>≤ 2.50 s</small></th><th class="num">INP<small>field only</small></th><th class="num">CLS<small>≤ 0.100</small></th><th class="num">TBT<small>≤ 200 ms</small></th><th class="num">Speed Index<small>≤ 3.40 s</small></th><th class="num">FCP<small>≤ 1.80 s</small></th><th class="num">JS<small>≤ 350 KB</small></th><th class="num">Requests<small>≤ 50</small></th>
+  <th>Top fixes<small>biggest estimated savings, median run</small></th>
+  <th>Reports (run · json)</th>
+</tr></thead>
+<tbody>
+<tr class="">
+  <td><div class="surface">landing</div><div class="path"><a href="http://localhost:3000/">/</a></div></td>
+  <td>mobile</td>
+  <td><span class="pill warn">69–91</span></td>
+  <td class="num warn" data-grade="warn">86</td>
+  <td class="num warn" data-grade="warn">2.99 s</td>
+  <td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td>
+  <td class="num good" data-grade="good">0.000</td>
+  <td class="num warn" data-grade="warn">390 ms</td>
+  <td class="num good" data-grade="good">1.09 s</td>
+  <td class="num good" data-grade="good">1.09 s</td>
+  <td class="num warn" data-grade="warn">398 KB</td>
+  <td class="num good" data-grade="good">32</td>
+  <td class="fixes"><ol><li>Minimize main-thread work (2.2 s) — ~400 ms TBT</li><li>Reduce unused JavaScript (Est savings of 125 KiB) — ~300 ms LCP</li><li>Render-blocking requests (Est savings of 270 ms) — ~250 ms LCP</li></ol></td>
+  <td class="runs"><a href="reports/landing__mobile__run1.report.html" title="Run 1: score 69">1</a> <a class="muted" href="reports/landing__mobile__run1.report.json">json</a> · <a href="reports/landing__mobile__run2.report.html" title="Run 2: score 82">2</a> <a class="muted" href="reports/landing__mobile__run2.report.json">json</a> · <a href="reports/landing__mobile__run3.report.html" title="Run 3: score 91">3</a> <a class="muted" href="reports/landing__mobile__run3.report.json">json</a> · <a href="reports/landing__mobile__run4.report.html" title="Run 4: score 86">4</a> <a class="muted" href="reports/landing__mobile__run4.report.json">json</a> · <a href="reports/landing__mobile__run5.report.html" title="Run 5: score 87">5</a> <a class="muted" href="reports/landing__mobile__run5.report.json">json</a></td>
+</tr>
+<tr class="">
+  <td><div class="surface">signup</div><div class="path"><a href="http://localhost:3000/signup">/signup</a></div></td>
+  <td>mobile</td>
+  <td><span class="pill warn">80–88</span></td>
+  <td class="num warn" data-grade="warn">87</td>
+  <td class="num warn" data-grade="warn">2.96 s</td>
+  <td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td>
+  <td class="num good" data-grade="good">0.000</td>
+  <td class="num warn" data-grade="warn">342 ms</td>
+  <td class="num good" data-grade="good">1.07 s</td>
+  <td class="num good" data-grade="good">1.07 s</td>
+  <td class="num warn" data-grade="warn">385 KB</td>
+  <td class="num good" data-grade="good">21</td>
+  <td class="fixes"><ol><li>Reduce unused JavaScript (Est savings of 125 KiB) — ~400 ms LCP</li><li>Render-blocking requests (Est savings of 310 ms) — ~300 ms LCP</li><li>Legacy JavaScript (Est savings of 24 KiB) — ~150 ms LCP</li></ol></td>
+  <td class="runs"><a href="reports/signup__mobile__run1.report.html" title="Run 1: score 80">1</a> <a class="muted" href="reports/signup__mobile__run1.report.json">json</a> · <a href="reports/signup__mobile__run2.report.html" title="Run 2: score 87">2</a> <a class="muted" href="reports/signup__mobile__run2.report.json">json</a> · <a href="reports/signup__mobile__run3.report.html" title="Run 3: score 86">3</a> <a class="muted" href="reports/signup__mobile__run3.report.json">json</a> · <a href="reports/signup__mobile__run4.report.html" title="Run 4: score 88">4</a> <a class="muted" href="reports/signup__mobile__run4.report.json">json</a> · <a href="reports/signup__mobile__run5.report.html" title="Run 5: score 88">5</a> <a class="muted" href="reports/signup__mobile__run5.report.json">json</a></td>
+</tr>
+<tr class="">
+  <td><div class="surface">login</div><div class="path"><a href="http://localhost:3000/login">/login</a></div></td>
+  <td>mobile</td>
+  <td><span class="pill warn">80–94</span></td>
+  <td class="num warn" data-grade="warn">88</td>
+  <td class="num warn" data-grade="warn">2.96 s</td>
+  <td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td>
+  <td class="num good" data-grade="good">0.000</td>
+  <td class="num warn" data-grade="warn">295 ms</td>
+  <td class="num good" data-grade="good">1.07 s</td>
+  <td class="num good" data-grade="good">1.07 s</td>
+  <td class="num warn" data-grade="warn">396 KB</td>
+  <td class="num good" data-grade="good">32</td>
+  <td class="fixes"><ol><li>Reduce unused JavaScript (Est savings of 125 KiB) — ~400 ms LCP</li><li>Render-blocking requests (Est savings of 350 ms) — ~350 ms LCP</li><li>Legacy JavaScript (Est savings of 24 KiB) — ~150 ms LCP</li></ol></td>
+  <td class="runs"><a href="reports/login__mobile__run1.report.html" title="Run 1: score 94">1</a> <a class="muted" href="reports/login__mobile__run1.report.json">json</a> · <a href="reports/login__mobile__run2.report.html" title="Run 2: score 90">2</a> <a class="muted" href="reports/login__mobile__run2.report.json">json</a> · <a href="reports/login__mobile__run3.report.html" title="Run 3: score 80">3</a> <a class="muted" href="reports/login__mobile__run3.report.json">json</a> · <a href="reports/login__mobile__run4.report.html" title="Run 4: score 88">4</a> <a class="muted" href="reports/login__mobile__run4.report.json">json</a> · <a href="reports/login__mobile__run5.report.html" title="Run 5: score 88">5</a> <a class="muted" href="reports/login__mobile__run5.report.json">json</a></td>
+</tr>
+<tr class="">
+  <td><div class="surface">landing</div><div class="path"><a href="http://localhost:3000/">/</a></div></td>
+  <td>desktop</td>
+  <td><span class="pill good">stable</span></td>
+  <td class="num good" data-grade="good">100</td>
+  <td class="num good" data-grade="good">0.65 s</td>
+  <td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td>
+  <td class="num good" data-grade="good">0.000</td>
+  <td class="num good" data-grade="good">11 ms</td>
+  <td class="num good" data-grade="good">0.30 s</td>
+  <td class="num good" data-grade="good">0.30 s</td>
+  <td class="num warn" data-grade="warn">398 KB</td>
+  <td class="num good" data-grade="good">32</td>
+  <td class="fixes"><ol><li>Reduce unused JavaScript (Est savings of 126 KiB) — ~110 ms load</li><li>Render-blocking requests (Est savings of 90 ms) — ~100 ms LCP</li><li>Legacy JavaScript (Est savings of 24 KiB) — ~50 ms LCP</li></ol></td>
+  <td class="runs"><a href="reports/landing__desktop__run1.report.html" title="Run 1: score 100">1</a> <a class="muted" href="reports/landing__desktop__run1.report.json">json</a> · <a href="reports/landing__desktop__run2.report.html" title="Run 2: score 100">2</a> <a class="muted" href="reports/landing__desktop__run2.report.json">json</a> · <a href="reports/landing__desktop__run3.report.html" title="Run 3: score 100">3</a> <a class="muted" href="reports/landing__desktop__run3.report.json">json</a> · <a href="reports/landing__desktop__run4.report.html" title="Run 4: score 100">4</a> <a class="muted" href="reports/landing__desktop__run4.report.json">json</a> · <a href="reports/landing__desktop__run5.report.html" title="Run 5: score 100">5</a> <a class="muted" href="reports/landing__desktop__run5.report.json">json</a></td>
+</tr>
+<tr class="">
+  <td><div class="surface">login</div><div class="path"><a href="http://localhost:3000/login">/login</a></div></td>
+  <td>desktop</td>
+  <td><span class="pill good">stable</span></td>
+  <td class="num good" data-grade="good">100</td>
+  <td class="num good" data-grade="good">0.64 s</td>
+  <td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td>
+  <td class="num good" data-grade="good">0.000</td>
+  <td class="num good" data-grade="good">0 ms</td>
+  <td class="num good" data-grade="good">0.30 s</td>
+  <td class="num good" data-grade="good">0.30 s</td>
+  <td class="num warn" data-grade="warn">396 KB</td>
+  <td class="num good" data-grade="good">32</td>
+  <td class="fixes"><ol><li>Render-blocking requests (Est savings of 100 ms) — ~100 ms LCP</li></ol></td>
+  <td class="runs"><a href="reports/login__desktop__run1.report.html" title="Run 1: score 100">1</a> <a class="muted" href="reports/login__desktop__run1.report.json">json</a> · <a href="reports/login__desktop__run2.report.html" title="Run 2: score 100">2</a> <a class="muted" href="reports/login__desktop__run2.report.json">json</a> · <a href="reports/login__desktop__run3.report.html" title="Run 3: score 100">3</a> <a class="muted" href="reports/login__desktop__run3.report.json">json</a> · <a href="reports/login__desktop__run4.report.html" title="Run 4: score 100">4</a> <a class="muted" href="reports/login__desktop__run4.report.json">json</a> · <a href="reports/login__desktop__run5.report.html" title="Run 5: score 100">5</a> <a class="muted" href="reports/login__desktop__run5.report.json">json</a></td>
+</tr>
+<tr class="">
+  <td><div class="surface">signup</div><div class="path"><a href="http://localhost:3000/signup">/signup</a></div></td>
+  <td>desktop</td>
+  <td><span class="pill good">stable</span></td>
+  <td class="num good" data-grade="good">100</td>
+  <td class="num good" data-grade="good">0.72 s</td>
+  <td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td>
+  <td class="num good" data-grade="good">0.000</td>
+  <td class="num good" data-grade="good">9 ms</td>
+  <td class="num good" data-grade="good">0.31 s</td>
+  <td class="num good" data-grade="good">0.31 s</td>
+  <td class="num warn" data-grade="warn">385 KB</td>
+  <td class="num good" data-grade="good">21</td>
+  <td class="fixes"><ol><li>Render-blocking requests (Est savings of 90 ms) — ~100 ms LCP</li><li>Reduce unused JavaScript (Est savings of 125 KiB) — ~50 ms LCP</li></ol></td>
+  <td class="runs"><a href="reports/signup__desktop__run1.report.html" title="Run 1: score 100">1</a> <a class="muted" href="reports/signup__desktop__run1.report.json">json</a> · <a href="reports/signup__desktop__run2.report.html" title="Run 2: score 100">2</a> <a class="muted" href="reports/signup__desktop__run2.report.json">json</a> · <a href="reports/signup__desktop__run3.report.html" title="Run 3: score 100">3</a> <a class="muted" href="reports/signup__desktop__run3.report.json">json</a> · <a href="reports/signup__desktop__run4.report.html" title="Run 4: score 100">4</a> <a class="muted" href="reports/signup__desktop__run4.report.json">json</a> · <a href="reports/signup__desktop__run5.report.html" title="Run 5: score 100">5</a> <a class="muted" href="reports/signup__desktop__run5.report.json">json</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p class="legend">Sorted worst first: failed runs, then lowest median score. Values are medians of successful runs; colours compare against target —
+<span class="good" style="background:var(--good-bg);color:var(--good-fg)">meets target</span>
+<span style="background:var(--warn-bg);color:var(--warn-fg)">needs improvement</span>
+<span style="background:var(--bad-bg);color:var(--bad-fg)">poor</span>.
+"Spread" is the min–max score across runs. INP cannot be measured in a lab navigation; use TBT as its proxy.
+Mobile uses Lighthouse's default throttled Moto G profile; desktop uses <code>--preset=desktop</code>.</p>
+<details>
+<summary>Every individual run (30)</summary>
+<div class="wrap">
+<table>
+<thead><tr><th>Surface</th><th>Device</th><th class="num">Run</th><th>Status</th><th class="num">Score</th><th class="num">LCP</th><th class="num">INP</th><th class="num">CLS</th><th class="num">TBT</th><th class="num">Speed Index</th><th class="num">FCP</th><th class="num">JS</th><th class="num">Requests</th><th>Report</th></tr></thead>
+<tbody>
+<tr>
+  <td>landing</td><td>desktop</td><td class="num">1</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.65 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">12 ms</td><td class="num good" data-grade="good">0.30 s</td><td class="num good" data-grade="good">0.30 s</td><td class="num warn" data-grade="warn">398 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/landing__desktop__run1.report.html">html</a> · <a href="reports/landing__desktop__run1.report.json">json</a></td>
+</tr>
+<tr>
+  <td>landing</td><td>desktop</td><td class="num">2</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.70 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">14 ms</td><td class="num good" data-grade="good">0.33 s</td><td class="num good" data-grade="good">0.33 s</td><td class="num warn" data-grade="warn">398 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/landing__desktop__run2.report.html">html</a> · <a href="reports/landing__desktop__run2.report.json">json</a></td>
+</tr>
+<tr>
+  <td>landing</td><td>desktop</td><td class="num">3</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.65 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">6 ms</td><td class="num good" data-grade="good">0.30 s</td><td class="num good" data-grade="good">0.30 s</td><td class="num warn" data-grade="warn">398 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/landing__desktop__run3.report.html">html</a> · <a href="reports/landing__desktop__run3.report.json">json</a></td>
+</tr>
+<tr>
+  <td>landing</td><td>desktop</td><td class="num">4</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.69 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">11 ms</td><td class="num good" data-grade="good">0.32 s</td><td class="num good" data-grade="good">0.32 s</td><td class="num warn" data-grade="warn">398 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/landing__desktop__run4.report.html">html</a> · <a href="reports/landing__desktop__run4.report.json">json</a></td>
+</tr>
+<tr>
+  <td>landing</td><td>desktop</td><td class="num">5</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.65 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">10 ms</td><td class="num good" data-grade="good">0.30 s</td><td class="num good" data-grade="good">0.30 s</td><td class="num warn" data-grade="warn">398 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/landing__desktop__run5.report.html">html</a> · <a href="reports/landing__desktop__run5.report.json">json</a></td>
+</tr>
+<tr>
+  <td>landing</td><td>mobile</td><td class="num">1</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">69</td><td class="num bad" data-grade="bad">4.11 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">559 ms</td><td class="num good" data-grade="good">2.61 s</td><td class="num warn" data-grade="warn">2.61 s</td><td class="num warn" data-grade="warn">398 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/landing__mobile__run1.report.html">html</a> · <a href="reports/landing__mobile__run1.report.json">json</a></td>
+</tr>
+<tr>
+  <td>landing</td><td>mobile</td><td class="num">2</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">82</td><td class="num warn" data-grade="warn">3.30 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">425 ms</td><td class="num good" data-grade="good">1.09 s</td><td class="num good" data-grade="good">1.09 s</td><td class="num warn" data-grade="warn">398 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/landing__mobile__run2.report.html">html</a> · <a href="reports/landing__mobile__run2.report.json">json</a></td>
+</tr>
+<tr>
+  <td>landing</td><td>mobile</td><td class="num">3</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">91</td><td class="num good" data-grade="good">2.27 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">322 ms</td><td class="num good" data-grade="good">1.07 s</td><td class="num good" data-grade="good">1.07 s</td><td class="num warn" data-grade="warn">398 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/landing__mobile__run3.report.html">html</a> · <a href="reports/landing__mobile__run3.report.json">json</a></td>
+</tr>
+<tr>
+  <td>landing</td><td>mobile</td><td class="num">4</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">86</td><td class="num warn" data-grade="warn">2.84 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">390 ms</td><td class="num good" data-grade="good">1.10 s</td><td class="num good" data-grade="good">1.10 s</td><td class="num warn" data-grade="warn">398 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/landing__mobile__run4.report.html">html</a> · <a href="reports/landing__mobile__run4.report.json">json</a></td>
+</tr>
+<tr>
+  <td>landing</td><td>mobile</td><td class="num">5</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">87</td><td class="num warn" data-grade="warn">2.99 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">343 ms</td><td class="num good" data-grade="good">1.07 s</td><td class="num good" data-grade="good">1.07 s</td><td class="num warn" data-grade="warn">398 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/landing__mobile__run5.report.html">html</a> · <a href="reports/landing__mobile__run5.report.json">json</a></td>
+</tr>
+<tr>
+  <td>login</td><td>desktop</td><td class="num">1</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.65 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">0 ms</td><td class="num good" data-grade="good">0.30 s</td><td class="num good" data-grade="good">0.30 s</td><td class="num warn" data-grade="warn">396 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/login__desktop__run1.report.html">html</a> · <a href="reports/login__desktop__run1.report.json">json</a></td>
+</tr>
+<tr>
+  <td>login</td><td>desktop</td><td class="num">2</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.49 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">8 ms</td><td class="num good" data-grade="good">0.30 s</td><td class="num good" data-grade="good">0.30 s</td><td class="num warn" data-grade="warn">396 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/login__desktop__run2.report.html">html</a> · <a href="reports/login__desktop__run2.report.json">json</a></td>
+</tr>
+<tr>
+  <td>login</td><td>desktop</td><td class="num">3</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.66 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">5 ms</td><td class="num good" data-grade="good">0.31 s</td><td class="num good" data-grade="good">0.31 s</td><td class="num warn" data-grade="warn">396 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/login__desktop__run3.report.html">html</a> · <a href="reports/login__desktop__run3.report.json">json</a></td>
+</tr>
+<tr>
+  <td>login</td><td>desktop</td><td class="num">4</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.63 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">0 ms</td><td class="num good" data-grade="good">0.30 s</td><td class="num good" data-grade="good">0.30 s</td><td class="num warn" data-grade="warn">396 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/login__desktop__run4.report.html">html</a> · <a href="reports/login__desktop__run4.report.json">json</a></td>
+</tr>
+<tr>
+  <td>login</td><td>desktop</td><td class="num">5</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.64 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">0 ms</td><td class="num good" data-grade="good">0.29 s</td><td class="num good" data-grade="good">0.29 s</td><td class="num warn" data-grade="warn">396 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/login__desktop__run5.report.html">html</a> · <a href="reports/login__desktop__run5.report.json">json</a></td>
+</tr>
+<tr>
+  <td>login</td><td>mobile</td><td class="num">1</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">94</td><td class="num good" data-grade="good">2.26 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">243 ms</td><td class="num good" data-grade="good">1.06 s</td><td class="num good" data-grade="good">1.06 s</td><td class="num warn" data-grade="warn">396 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/login__mobile__run1.report.html">html</a> · <a href="reports/login__mobile__run1.report.json">json</a></td>
+</tr>
+<tr>
+  <td>login</td><td>mobile</td><td class="num">2</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">90</td><td class="num warn" data-grade="warn">3.22 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">206 ms</td><td class="num good" data-grade="good">1.06 s</td><td class="num good" data-grade="good">1.06 s</td><td class="num warn" data-grade="warn">396 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/login__mobile__run2.report.html">html</a> · <a href="reports/login__mobile__run2.report.json">json</a></td>
+</tr>
+<tr>
+  <td>login</td><td>mobile</td><td class="num">3</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">80</td><td class="num warn" data-grade="warn">3.94 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">331 ms</td><td class="num good" data-grade="good">1.07 s</td><td class="num good" data-grade="good">1.07 s</td><td class="num warn" data-grade="warn">396 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/login__mobile__run3.report.html">html</a> · <a href="reports/login__mobile__run3.report.json">json</a></td>
+</tr>
+<tr>
+  <td>login</td><td>mobile</td><td class="num">4</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">88</td><td class="num warn" data-grade="warn">2.96 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">302 ms</td><td class="num good" data-grade="good">1.07 s</td><td class="num good" data-grade="good">1.07 s</td><td class="num warn" data-grade="warn">396 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/login__mobile__run4.report.html">html</a> · <a href="reports/login__mobile__run4.report.json">json</a></td>
+</tr>
+<tr>
+  <td>login</td><td>mobile</td><td class="num">5</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">88</td><td class="num warn" data-grade="warn">2.96 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">295 ms</td><td class="num good" data-grade="good">1.08 s</td><td class="num good" data-grade="good">1.08 s</td><td class="num warn" data-grade="warn">396 KB</td><td class="num good" data-grade="good">32</td>
+  <td><a href="reports/login__mobile__run5.report.html">html</a> · <a href="reports/login__mobile__run5.report.json">json</a></td>
+</tr>
+<tr>
+  <td>signup</td><td>desktop</td><td class="num">1</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.73 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">11 ms</td><td class="num good" data-grade="good">0.31 s</td><td class="num good" data-grade="good">0.31 s</td><td class="num warn" data-grade="warn">385 KB</td><td class="num good" data-grade="good">21</td>
+  <td><a href="reports/signup__desktop__run1.report.html">html</a> · <a href="reports/signup__desktop__run1.report.json">json</a></td>
+</tr>
+<tr>
+  <td>signup</td><td>desktop</td><td class="num">2</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.60 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">3 ms</td><td class="num good" data-grade="good">0.30 s</td><td class="num good" data-grade="good">0.30 s</td><td class="num warn" data-grade="warn">385 KB</td><td class="num good" data-grade="good">21</td>
+  <td><a href="reports/signup__desktop__run2.report.html">html</a> · <a href="reports/signup__desktop__run2.report.json">json</a></td>
+</tr>
+<tr>
+  <td>signup</td><td>desktop</td><td class="num">3</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.76 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">20 ms</td><td class="num good" data-grade="good">0.38 s</td><td class="num good" data-grade="good">0.33 s</td><td class="num warn" data-grade="warn">385 KB</td><td class="num good" data-grade="good">21</td>
+  <td><a href="reports/signup__desktop__run3.report.html">html</a> · <a href="reports/signup__desktop__run3.report.json">json</a></td>
+</tr>
+<tr>
+  <td>signup</td><td>desktop</td><td class="num">4</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.68 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">9 ms</td><td class="num good" data-grade="good">0.32 s</td><td class="num good" data-grade="good">0.32 s</td><td class="num warn" data-grade="warn">385 KB</td><td class="num good" data-grade="good">21</td>
+  <td><a href="reports/signup__desktop__run4.report.html">html</a> · <a href="reports/signup__desktop__run4.report.json">json</a></td>
+</tr>
+<tr>
+  <td>signup</td><td>desktop</td><td class="num">5</td>
+  <td>ok</td>
+  <td class="num good" data-grade="good">100</td><td class="num good" data-grade="good">0.72 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num good" data-grade="good">7 ms</td><td class="num good" data-grade="good">0.31 s</td><td class="num good" data-grade="good">0.31 s</td><td class="num warn" data-grade="warn">385 KB</td><td class="num good" data-grade="good">21</td>
+  <td><a href="reports/signup__desktop__run5.report.html">html</a> · <a href="reports/signup__desktop__run5.report.json">json</a></td>
+</tr>
+<tr>
+  <td>signup</td><td>mobile</td><td class="num">1</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">80</td><td class="num bad" data-grade="bad">4.01 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">310 ms</td><td class="num good" data-grade="good">1.11 s</td><td class="num good" data-grade="good">1.11 s</td><td class="num warn" data-grade="warn">385 KB</td><td class="num good" data-grade="good">21</td>
+  <td><a href="reports/signup__mobile__run1.report.html">html</a> · <a href="reports/signup__mobile__run1.report.json">json</a></td>
+</tr>
+<tr>
+  <td>signup</td><td>mobile</td><td class="num">2</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">87</td><td class="num warn" data-grade="warn">2.95 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">342 ms</td><td class="num good" data-grade="good">1.06 s</td><td class="num good" data-grade="good">1.06 s</td><td class="num warn" data-grade="warn">385 KB</td><td class="num good" data-grade="good">21</td>
+  <td><a href="reports/signup__mobile__run2.report.html">html</a> · <a href="reports/signup__mobile__run2.report.json">json</a></td>
+</tr>
+<tr>
+  <td>signup</td><td>mobile</td><td class="num">3</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">86</td><td class="num warn" data-grade="warn">2.96 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">363 ms</td><td class="num good" data-grade="good">1.07 s</td><td class="num good" data-grade="good">1.07 s</td><td class="num warn" data-grade="warn">385 KB</td><td class="num good" data-grade="good">21</td>
+  <td><a href="reports/signup__mobile__run3.report.html">html</a> · <a href="reports/signup__mobile__run3.report.json">json</a></td>
+</tr>
+<tr>
+  <td>signup</td><td>mobile</td><td class="num">4</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">88</td><td class="num good" data-grade="good">2.28 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">422 ms</td><td class="num good" data-grade="good">1.08 s</td><td class="num good" data-grade="good">1.08 s</td><td class="num warn" data-grade="warn">385 KB</td><td class="num good" data-grade="good">21</td>
+  <td><a href="reports/signup__mobile__run4.report.html">html</a> · <a href="reports/signup__mobile__run4.report.json">json</a></td>
+</tr>
+<tr>
+  <td>signup</td><td>mobile</td><td class="num">5</td>
+  <td>ok</td>
+  <td class="num warn" data-grade="warn">88</td><td class="num warn" data-grade="warn">3.24 s</td><td class="num muted" title="INP needs real interactions; Lighthouse navigation runs cannot measure it. TBT is the lab proxy.">n/a</td><td class="num good" data-grade="good">0.000</td><td class="num warn" data-grade="warn">229 ms</td><td class="num good" data-grade="good">1.07 s</td><td class="num good" data-grade="good">1.07 s</td><td class="num warn" data-grade="warn">385 KB</td><td class="num good" data-grade="good">21</td>
+  <td><a href="reports/signup__mobile__run5.report.html">html</a> · <a href="reports/signup__mobile__run5.report.json">json</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</main>
+</body>
+</html>

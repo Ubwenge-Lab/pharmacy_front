@@ -16,6 +16,7 @@ import {
   ShoppingBagIcon,
 } from '@heroicons/react/24/outline';
 import Link from 'next/link';
+import { fetchStaffProfile } from '@/services/staffProfile';
 
 interface CurrentAttendance {
   id: string;
@@ -68,13 +69,13 @@ export default function StaffDashboardPage() {
   const fetchData = async () => {
     try {
       const [profileRes, shiftRes, ordersRes] = await Promise.allSettled([
-        api.get('/staff/profile/me'),
+        fetchStaffProfile<StaffProfile>(),
         api.get('/attendance/my-current'),
         api.get('/orders/pharmacy-orders'),
       ]);
 
       if (profileRes.status === 'fulfilled') {
-        setProfile(profileRes.value.data);
+        setProfile(profileRes.value);
       } else {
         console.error('[dashboard] profile error:', profileRes.reason?.response?.data ?? profileRes.reason);
       }

@@ -1,7 +1,7 @@
 // src/hooks/useStaffPermissions.ts
 //
-// Fetches the authenticated staff member's live permission list from
-// GET /staff/profile/me and exposes a `can()` helper.
+// Reads the authenticated staff member's permission list from the shared
+// staff profile (services/staffProfile.ts) and exposes a `can()` helper.
 //
 // Usage:
 //   const { can, permissions, loading } = useStaffPermissions();
@@ -10,7 +10,7 @@
 'use client';
 
 import { useState, useEffect, useCallback } from 'react';
-import api from '@/lib/api';
+import { fetchStaffProfile } from '@/services/staffProfile';
 
 type StaffPermission = string;
 
@@ -34,12 +34,12 @@ export function useStaffPermissions(): UseStaffPermissionsResult {
   useEffect(() => {
     let cancelled = false;
 
-    api
-      .get('/staff/profile/me')
-      .then((res) => {
+    // One shared request for the whole page: sidebar, gates and pages all land here.
+    fetchStaffProfile()
+      .then((profile) => {
         if (cancelled) return;
         // Profile shape: { permissions: { permissions: string[] } }
-        const raw: string[] = res.data?.permissions?.permissions ?? [];
+        const raw: string[] = profile?.permissions?.permissions ?? [];
         setPermissions(raw);
       })
       .catch(() => {

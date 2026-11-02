@@ -5,6 +5,9 @@
 import { api, unwrapData } from '@/lib/api';
 import { ApiResponse } from '@/types';
 import { PharmacyLocation } from '@/features/map/pharmacyData';
+import { abortable, cachedRequest } from '@/lib/requestCache';
+
+const LOCATIONS_TTL_MS = 5 * 60_000;
 
 export interface PharmacyLocationResponse {
   pharmacies: PharmacyLocation[];
@@ -17,40 +20,52 @@ export interface FetchResult<T> {
 }
 
 /**
- * Fetch all pharmacy locations for the map
- * TODO: Uncomment real API call and remove mock return
+ * Fetch all pharmacy locations for the map.
+ * Shared across the patient dashboard, patient search and the super admin map,
+ * so moving between them reuses one result for LOCATIONS_TTL_MS.
  */
 export async function fetchPharmacyLocations(signal?: AbortSignal): Promise<PharmacyLocation[]> {
   try {
-    try {
-      const res = await api.get('/pharmacies/locations', { signal });
-      const data = unwrapData<PharmacyLocation>(res.data);
-      if (data.length > 0) return data;
-      if (Array.isArray(res.data?.pharmacies) && res.data.pharmacies.length > 0) return res.data.pharmacies;
-    } catch {
-      // Fallback for roles without access to /locations (e.g. Branch Managers)
-    }
-
-    // Fallback mapping directly to public /pharmacies endpoint
-    const res = await api.get('/pharmacies', { signal });
-    return res.data.map((p: any) => ({
-      id: p.id,
-      name: p.name,
-      address: p.address || 'No Address',
-      latitude: p.latitude,
-      longitude: p.longitude,
-      phone: p.phone || 'N/A',
-      status: p.status === 'APPROVED' ? 'OPEN' : 'CLOSED',
-      isActive: true,
-      region: p.address ? p.address.split(',').pop()?.trim() : 'Unknown',
-      hours: p.operatingHours ? 'Various' : '08:00 - 20:00',
-    }));
+    const list = await abortable(
+      cachedRequest<PharmacyLocation[]>('pharmacies:locations', loadPharmacyLocations, {
+        ttlMs: LOCATIONS_TTL_MS,
+      }),
+      signal,
+    );
+    // Copy so a caller that sorts or mutates its list cannot change the shared one.
+    return list.slice();
   } catch (error) {
     if (error instanceof Error && error.name === 'AbortError') {
       throw error;
     }
     throw new Error('Failed to load pharmacy locations. Please try again.');
   }
+}
+
+async function loadPharmacyLocations(): Promise<PharmacyLocation[]> {
+  try {
+    const res = await api.get('/pharmacies/locations');
+    const data = unwrapData<PharmacyLocation>(res.data);
+    if (data.length > 0) return data;
+    if (Array.isArray(res.data?.pharmacies) && res.data.pharmacies.length > 0) return res.data.pharmacies;
+  } catch {
+    // Fallback for roles without access to /locations (e.g. Branch Managers)
+  }
+
+  // Fallback mapping directly to public /pharmacies endpoint
+  const res = await api.get('/pharmacies');
+  return res.data.map((p: any) => ({
+    id: p.id,
+    name: p.name,
+    address: p.address || 'No Address',
+    latitude: p.latitude,
+    longitude: p.longitude,
+    phone: p.phone || 'N/A',
+    status: p.status === 'APPROVED' ? 'OPEN' : 'CLOSED',
+    isActive: true,
+    region: p.address ? p.address.split(',').pop()?.trim() : 'Unknown',
+    hours: p.operatingHours ? 'Various' : '08:00 - 20:00',
+  }));
 }
 
 /**

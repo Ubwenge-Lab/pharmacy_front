@@ -5,8 +5,11 @@ import Cookies from 'js-cookie';
 import { jwtDecode } from 'jwt-decode';
 
 import { User, DecodedToken } from '@/types';
+import { clearRequestCache } from '@/lib/requestCache';
 
 export const setAuthTokens = (accessToken: string, refreshToken: string) => {
+  // New or refreshed session: shared request data must not outlive the previous one.
+  clearRequestCache();
   Cookies.set('accessToken', accessToken, { expires: 1/48 }); // 30 min
   Cookies.set('refreshToken', refreshToken, { expires: 7 }); // 7 days
 
@@ -15,6 +18,7 @@ export const setAuthTokens = (accessToken: string, refreshToken: string) => {
 };
 
 export const removeAuthTokens = () => {
+  clearRequestCache();
   Cookies.remove('accessToken');
   Cookies.remove('refreshToken');
   Cookies.remove('userRole');

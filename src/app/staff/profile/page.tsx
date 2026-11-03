@@ -20,6 +20,7 @@ import {
   ShieldCheckIcon,
 } from '@heroicons/react/24/outline';
 import { openFile } from '@/lib/openFile';
+import { fetchStaffProfile, invalidateStaffProfile } from '@/services/staffProfile';
 
 interface StaffProfile {
   id: string;
@@ -89,13 +90,13 @@ export default function StaffProfilePage() {
   const [form, setForm]             = useState<EditForm>({ firstName: '', lastName: '', phone: '' });
 
   useEffect(() => {
-    api.get('/staff/profile/me')
-      .then(res => {
-        setProfile(res.data);
+    fetchStaffProfile<StaffProfile>()
+      .then(data => {
+        setProfile(data);
         setForm({
-          firstName: res.data.firstName ?? '',
-          lastName:  res.data.lastName  ?? '',
-          phone:     res.data.phone     ?? '',
+          firstName: data.firstName ?? '',
+          lastName:  data.lastName  ?? '',
+          phone:     data.phone     ?? '',
         });
       })
       .catch(() => {})
@@ -122,6 +123,7 @@ export default function StaffProfilePage() {
         lastName:  form.lastName.trim(),
         phone:     form.phone.trim() || undefined,
       });
+      invalidateStaffProfile();
       setProfile(res.data);
       setIsEditing(false);
       toast.success(t('profile.updateSuccess'));

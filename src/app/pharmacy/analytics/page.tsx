@@ -3,7 +3,9 @@
 import { formatCurrency } from '@/lib/currency';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import api, { unwrapItem } from '@/lib/api';
+import { unwrapItem } from '@/lib/api';
+import { abortable } from '@/lib/requestCache';
+import { fetchPharmacyStats, fetchPharmacyAnalytics } from '@/services/pharmacyDashboard';
 import type { PharmacyAnalytics, PharmacyStats } from '@/types';
 import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import { CalendarDaysIcon } from '@heroicons/react/24/outline';
@@ -149,12 +151,12 @@ export default function PharmacyAnalyticsPage() {
   useEffect(() => {
     const ctrl = new AbortController();
     Promise.all([
-      api.get('/pharmacies/dashboard/analytics', { signal: ctrl.signal }),
-      api.get('/pharmacies/dashboard/stats',     { signal: ctrl.signal }),
+      abortable(fetchPharmacyAnalytics(), ctrl.signal),
+      abortable(fetchPharmacyStats(), ctrl.signal),
     ])
       .then(([aRes, sRes]) => {
-        setAnalytics(unwrapItem<PharmacyAnalytics>(aRes.data));
-        setStats(unwrapItem<PharmacyStats>(sRes.data));
+        setAnalytics(unwrapItem<PharmacyAnalytics>(aRes));
+        setStats(unwrapItem<PharmacyStats>(sRes));
       })
       .catch(() => {})
       .finally(() => setLoading(false));

@@ -19,6 +19,7 @@ import api, { unwrapData, unwrapItem } from '@/lib/api';
 import toast from 'react-hot-toast';
 import { getErrorMessage } from '@/lib/errorHandler';
 import { FDA_CATEGORIES } from '@/lib/constants';
+import { fetchStaffProfile } from '@/services/staffProfile';
 
 export type MedicationFormRole = 'pharmacy' | 'branch' | 'staff';
 
@@ -114,10 +115,10 @@ export function useMedicationForm(role: MedicationFormRole): UseMedicationFormRe
 
     } else {
       // staff: GET /staff/profile/me returns branchId and branch.name
-      api.get('/staff/profile/me')
-        .then(res => {
-          setBranchName(res.data?.branch?.name ?? '');
-          setBranchId(res.data?.branchId ?? res.data?.branch?.id ?? '');
+      fetchStaffProfile()
+        .then(profile => {
+          setBranchName(profile?.branch?.name ?? '');
+          setBranchId(profile?.branchId ?? profile?.branch?.id ?? '');
         })
         .catch(() => toast.error(t('errors.failedLoadBranchInfo')))
         .finally(() => setCtxLoad(false));

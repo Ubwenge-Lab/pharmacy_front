@@ -8,6 +8,8 @@ import {
   BoltIcon, BuildingOffice2Icon, CurrencyDollarIcon, ExclamationTriangleIcon, CalendarIcon, Bars3BottomLeftIcon,
 } from '@heroicons/react/24/outline';
 import api, { unwrapItem } from '@/lib/api';
+import { abortable } from '@/lib/requestCache';
+import { fetchPharmacyStats, fetchPharmacyAnalytics } from '@/services/pharmacyDashboard';
 import type { PharmacyStats, PharmacyAnalytics, DailyRevenue, WeeklyRevenue, PharmacyProfile } from '@/types';
 import {
   AreaChart, Area, BarChart, Bar, XAxis, YAxis, CartesianGrid,
@@ -99,15 +101,15 @@ export default function PharmacyDashboard() {
     const s = controller.signal;
 
     Promise.all([
-      api.get('/pharmacies/dashboard/stats',          { signal: s }),
-      api.get('/pharmacies/dashboard/analytics',      { signal: s }),
+      abortable(fetchPharmacyStats(), s),
+      abortable(fetchPharmacyAnalytics(), s),
       api.get('/pharmacies/dashboard/daily-revenue',  { signal: s }),
       api.get('/pharmacies/dashboard/weekly-revenue', { signal: s }),
       api.get('/pharmacies/profile/me',               { signal: s }),
     ])
       .then(async ([sRes, aRes, dRes, wRes, pRes]) => {
-        const st = unwrapItem<PharmacyStats>(sRes.data);
-        const an = unwrapItem<PharmacyAnalytics>(aRes.data);
+        const st = unwrapItem<PharmacyStats>(sRes);
+        const an = unwrapItem<PharmacyAnalytics>(aRes);
         const dr = unwrapItem<DailyRevenue>(dRes.data);
         const wr = unwrapItem<WeeklyRevenue>(wRes.data);
         let pr  = unwrapItem<PharmacyProfile>(pRes.data);

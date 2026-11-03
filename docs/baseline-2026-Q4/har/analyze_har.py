@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+aft#!/usr/bin/env python3
 """Usage: python analyze_har.py file.har [api-host-substring]
 Prints request totals, API vs Next prefetch, bytes, repeated API calls (parallel vs later), 4xx/5xx."""
 import json, sys, collections

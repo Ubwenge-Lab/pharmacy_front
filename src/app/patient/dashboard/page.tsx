@@ -19,7 +19,6 @@ import {
   CheckCircleIcon,
   ClipboardDocumentListIcon,
 } from '@heroicons/react/24/outline';
-import LoadingSpinner from '@/components/shared/LoadingSpinner';
 import StatusBadge from '@/components/shared/StatusBadge';
 import { fetchPharmacyLocations } from '@/services/pharmacies';
 import { PharmacyLocation, DEFAULT_CENTER, DEFAULT_ZOOM } from '@/features/map/pharmacyData';
@@ -133,14 +132,6 @@ export default function PatientDashboard() {
       iconBg: '#BBF7D0',
     },
   ];
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <LoadingSpinner />
-      </div>
-    );
-  }
 
   return (
     <div className="space-y-6">
@@ -280,7 +271,24 @@ export default function PatientDashboard() {
           </Link>
         </div>
 
-        {recentOrders.length > 0 ? (
+        {loading ? (
+          <div className="flex flex-col" style={{ gap: '20px' }}>
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 flex items-center gap-5 animate-pulse">
+                <div className="w-20 h-20 rounded-2xl bg-gray-100 shrink-0" />
+                <div className="flex-1 space-y-2">
+                  <div className="h-4 bg-gray-100 rounded w-1/3" />
+                  <div className="h-3 bg-gray-100 rounded w-1/4" />
+                  <div className="h-3 bg-gray-100 rounded w-1/2" />
+                </div>
+                <div className="space-y-2 text-right shrink-0">
+                  <div className="h-5 bg-gray-100 rounded w-20" />
+                  <div className="h-5 bg-gray-100 rounded w-16 ml-auto" />
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : recentOrders.length > 0 ? (
           <div className="flex flex-col" style={{ gap: '20px' }}>
             {recentOrders.map((order) => {
               const firstItem = order.items?.[0] ?? order.orderItems?.[0];
@@ -288,7 +296,6 @@ export default function PatientDashboard() {
               const medImage = firstItem?.medication?.imageUrl;
               const pharmacyName = order.pharmacy?.name ?? '—';
               const branchName = order.branch?.name ?? '';
-
 
               return (
                 <Link key={order.id} href={`/patient/orders/${order.id}`}>
@@ -299,7 +306,7 @@ export default function PatientDashboard() {
                       style={{ background: '#F0F7FF' }}
                     >
                       {medImage ? (
-                        <Image unoptimized src={medImage} alt={medName} width={80} height={80} className="w-full h-full object-contain p-2" />
+                        <Image src={medImage} alt={medName} width={80} height={80} className="w-full h-full object-contain p-2" />
                       ) : (
                         <ShoppingCartIcon className="w-8 h-8 text-blue-300" />
                       )}

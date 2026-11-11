@@ -212,7 +212,6 @@ export default function PrescriptionQueuePage() {
             {selected.fileType === 'application/pdf' ? (
               <iframe src={selected.fileUrl} title="Prescription PDF" className="w-full h-72 rounded-xl border border-gray-200" />
             ) : (
-              // eslint-disable-next-line @next/next/no-img-element
               <img src={selected.fileUrl} alt="Prescription" className="w-full max-h-72 object-contain rounded-xl border border-gray-200" />
             )}
           </div>

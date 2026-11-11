@@ -667,7 +667,6 @@ export default function POSPage() {
               <div className="flex justify-center py-10"><LoadingSpinner /></div>
             ) : qrData ? (
               <>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src={qrData.qrDataUrl} alt="Branch QR" className="mx-auto w-48 h-48 rounded-xl border border-gray-200" />
                 <p className="text-sm font-medium text-gray-800 dark:text-white mt-3">{qrData.branchName}</p>
                 <p className="text-xs text-gray-400 mt-1 break-all">{qrData.deepLink}</p>

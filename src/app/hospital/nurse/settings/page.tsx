@@ -139,7 +139,6 @@ export default function NurseSettingsPage() {
             <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-full flex items-center justify-center text-white text-2xl sm:text-3xl font-bold overflow-hidden"
               style={{ background: GRADIENT }}>
               {avatarUrl ? (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img src={avatarUrl} alt={profile.name} className="w-full h-full object-cover" />
               ) : initials}
             </div>

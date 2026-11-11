@@ -250,7 +250,7 @@ function OutpatientTriageContent() {
       .finally(() => setLoading(false));
   };
 
-  useEffect(() => { loadQueue(); }, [hospitalId]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { loadQueue(); }, [hospitalId]); // intentional: re-run only when hospital changes
 
   function handleSelect(id: string) {
     setSelectedId(id);

@@ -163,7 +163,6 @@ export default function PharmacyProfilePage() {
           {/* Avatar with working upload button */}
           <div className="relative mb-3">
             {logoUrl ? (
-              // eslint-disable-next-line @next/next/no-img-element
               <img
                 src={logoUrl}
                 alt={ownerName || 'Profile photo'}

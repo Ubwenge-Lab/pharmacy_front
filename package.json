@@ -9,7 +9,9 @@
     "start": "next start",
     "dev:doppler": "winpty doppler run -- npm run dev",
     "build:doppler": "winpty doppler run -- npm run build",
-    "lint": "eslint"
+    "lint": "eslint",
+    "test": "jest",
+    "test:cov": "jest --coverage"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

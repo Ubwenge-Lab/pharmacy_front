@@ -98,7 +98,6 @@ export default function ReceptionistProfilePage() {
                 style={{ backgroundColor: '#EBF5FF' }}
               >
                 {avatar ? (
-                  // eslint-disable-next-line @next/next/no-img-element
                   <img src={avatar} alt="Profile" className="w-full h-full object-cover" />
                 ) : (
                   <User size={44} style={{ color: '#2563EB' }} />

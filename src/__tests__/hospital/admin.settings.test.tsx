@@ -6,7 +6,6 @@ jest.mock('react-i18next', () => ({
 }));
 jest.mock('@/lib/api', () => ({ __esModule: true, default: { get: jest.fn(), patch: jest.fn() } }));
 jest.mock('@/lib/hospital', () => ({ useHospitalId: jest.fn().mockReturnValue('h1') }));
-// eslint-disable-next-line @next/next/no-img-element
 jest.mock('next/image', () => ({ __esModule: true, default: ({ src, alt }: any) => <img src={src} alt={alt} /> }));
 jest.mock('lucide-react', () => {
   const i = () => <span />;

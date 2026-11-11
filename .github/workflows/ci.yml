@@ -1,0 +1,63 @@
+name: CI
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [dev, main]
+
+jobs:
+  ci:
+    name: lint / typecheck / test / build / audit
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      # ── Lint ─────────────────────────────────────────────────────────────────
+      # Run eslint without --fix so failures are visible rather than silently
+      # reformatted. The repo's `lint` script auto-fixes, which hides failures in CI.
+      - name: Lint
+        run: npx eslint .
+
+      # ── Type check ───────────────────────────────────────────────────────────
+      - name: Type check
+        run: npx tsc --noEmit
+
+      # ── Unit and component tests ──────────────────────────────────────────────
+      - name: Test (with coverage)
+        run: npm test -- --ci --coverage
+
+      # ── Build ────────────────────────────────────────────────────────────────
+      - name: Build
+        run: npm run build
+
+      # ── Dependency vulnerability gate ────────────────────────────────────────
+      # Fails only on high/critical advisories. Run `npm audit` locally to triage.
+      - name: Audit dependencies (high+)
+        run: npm audit --audit-level=high
+
+      # ── Static analysis (Semgrep OSS) ─────────────────────────────────────────
+      - name: Semgrep
+        uses: semgrep/semgrep-action@v1
+        with:
+          config: >-
+            p/javascript
+            p/typescript
+            p/react
+            p/owasp-top-ten
+        continue-on-error: false
+
+      # ── Secret scanning (gitleaks) ─────────────────────────────────────────────
+      - name: Gitleaks secret scan
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

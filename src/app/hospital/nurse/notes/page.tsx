@@ -59,7 +59,7 @@ export default function NursingNotesPage() {
       .finally(() => setLoadingNotes(false));
   };
 
-  useEffect(() => { loadNotes(); }, [hospitalId, dateFilter]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => { loadNotes(); }, [hospitalId, dateFilter]); // intentional: re-run only when filter changes
 
   const filteredNotes = useMemo(() => {
     const q = search.toLowerCase();
